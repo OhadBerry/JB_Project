@@ -11,7 +11,7 @@ public class ConnectionPool {
 	
 	
 	private Stack<Connection> connections = new Stack<>();
-	private static final String connectionString = "jdbc:mysql://localhost:3306/test";
+	private static final String connectionString = "jdbc:mysql://localhost:3306/javaproject?autoReconnect=true&useSSL=false";
 	private static final String driver = "com.mysql.jdbc.Driver";
 
 	private ConnectionPool() {
@@ -22,7 +22,7 @@ public class ConnectionPool {
 		}
 		for(int i = 1; i <= 10; i++) {
 			try {
-				Connection conn = DriverManager.getConnection(connectionString);
+				Connection conn = DriverManager.getConnection(connectionString,"root","Sparhawk");
 				connections.push(conn);
 				System.out.println(i);
 			}

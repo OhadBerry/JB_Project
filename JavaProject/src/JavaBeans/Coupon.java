@@ -6,8 +6,8 @@ public class Coupon {
 //------------------Properties----------------------	
 	
 	private int id;
-	private int companyID;
-	private Category category;
+	private int company_id;
+	private Category category_id;
 	private String title;
 	private String description;
 	private Date startDate;
@@ -18,12 +18,12 @@ public class Coupon {
 	
 //------------------Constructor----------------------	
 	
-	public Coupon(int id, int companyID, Category category, String title, String description, Date startDate,
+	public Coupon(int id, int company_id, Category category_id, String title, String description, Date startDate,
 			Date endDate, int amount, double price, String image) {
 		super();
 		this.id = id;
-		this.companyID = companyID;
-		this.category = category;
+		this.company_id = company_id;
+		this.category_id = category_id;
 		this.title = title;
 		this.description = description;
 		this.startDate = startDate;
@@ -42,17 +42,17 @@ public class Coupon {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getCompanyID() {
-		return companyID;
+	public int getCompany_id() {
+		return company_id;
 	}
-	public void setCompanyID(int companyID) {
-		this.companyID = companyID;
+	public void setCompany_id(int company_id) {
+		this.company_id = company_id;
 	}
-	public Category getCategory() {
-		return category;
+	public Category getCategory_id() {
+		return category_id;
 	}
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setCategory_id(Category category_id) {
+		this.category_id = category_id;
 	}
 	public String getTitle() {
 		return title;
