@@ -3,24 +3,35 @@ package DBDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import DAO.CouponsDAO;
 import JavaBeans.Coupon;
 
 public class CouponsDBDAO implements  CouponsDAO{
-	private ConnectionPool connectionPool;
+	private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
 	@Override
 	public void addCoupon(Coupon coupon) throws Exception {
+
 		Connection connection = null;
 
 		try {
 
 			connection = connectionPool.getConnection();
+			System.out.println("Hi");
 
-			String sql = String.format("INSERT INTO COMPANIES(company_id, category_id, title, description, startDate, endDate, amount, price, image) " + "VALUES('%d', '%d', '%s', '%s', '%d', '%d', '%d', '%d', '%s')",
-					coupon.getCompany_id(), coupon.getCategory_id(), coupon.getTitle(),coupon.getDescription() , coupon.getStartDate() , coupon.getEndDate() , coupon.getAmount(), coupon.getPrice(), coupon.getImage() );
+			//Creating a String out of Date in the correct format for an SQL Statement "yyyy/MM/dd" 
+			String pattern = "yyyy/MM/dd";
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+			String startDateStr = simpleDateFormat.format(coupon.getStartDate());
+			String endDateStr = simpleDateFormat.format(coupon.getEndDate());
+			
+			String sql = String.format("INSERT INTO COUPONS(title, description, start_Date, end_Date, amount, price, image) " + "VALUES('%s', '%s', '%s', '%s', '%d', '%d', '%s')",
+					coupon.getTitle(),coupon.getDescription() , startDateStr , endDateStr , coupon.getAmount(), (int)coupon.getPrice(), coupon.getImage() );
+			
+			System.out.println(sql);
 
 			try (PreparedStatement preparedStatement = connection.prepareStatement(sql,
 					PreparedStatement.RETURN_GENERATED_KEYS)) {

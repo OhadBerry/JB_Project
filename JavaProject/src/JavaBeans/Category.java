@@ -1,6 +1,9 @@
 package JavaBeans;
 
 public enum Category {
-	food,
+	Food,
+	Electricity,
+	Restaurant,
+	Vacation
 
 }

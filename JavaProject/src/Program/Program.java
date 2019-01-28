@@ -4,6 +4,7 @@ package Program;
 import java.sql.SQLException;
 
 import DBDAO.CompaniesDBDAO;
+import DBDAO.CouponsDBDAO;
 import JavaBeans.Category;
 import JavaBeans.Company;
 import JavaBeans.Coupon;
@@ -19,7 +20,7 @@ public class Program {
 
             System.out.println("Welcome to the companiesDBDAO program");
 
-            CompaniesDBDAO companiesDBDAO = new CompaniesDBDAO();
+            
             
             //Create an instance of Company with values
             Company company = new Company(0, null, null, null, null);
@@ -34,16 +35,18 @@ public class Program {
             companyUpdated.setPassword("abcdUpdated");
             companyUpdated.setId(5);
             
-            //Create an instance of Coupon with values
-            Date startDate = new Date();
-			System.out.println(startDate);
-			Date endDate = new Date(119,1,20);
-			System.out.println(endDate);
-			//Coupon coupon = new Coupon(0, 0, Category.food,"myCoupon", "myDescription", startDate, endDate, 100, 200, "myImage");
+            
+            //Test Coupon DBDAO
+            CouponsDBDAO	couponsDBDAO = new CouponsDBDAO();
+            
+			Coupon coupon = new Coupon(0, 0, 0,"myCoupon", "myDescription", new Date(), new Date(119,1,20), 100, 200, "myImage");
+			couponsDBDAO.addCoupon(coupon);
 
             //Create an instance of Coupon with updated values to insert into "Update" method
 
-            //
+            //Test Companies DBDAO
+			CompaniesDBDAO 	companiesDBDAO = new CompaniesDBDAO();
+			
             companiesDBDAO.addCompany(company);
             System.out.println(companiesDBDAO.isCompanyExists("johnBryce@gmail.com","abcd"));
             companiesDBDAO.updateCompany(companyUpdated);
