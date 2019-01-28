@@ -35,9 +35,11 @@ public class Program {
             companyUpdated.setId(5);
             
             //Create an instance of Coupon with values
-            Date startDate;
-			Date endDate = Date.UTC(startDate.getYear(), startDate.getMonth(), startDate.getDate()+1,startDate.getHours(),startDate.getMinutes(),startDate.getSeconds());
-			Coupon coupon = new Coupon(0, 0, Category.food,"myCoupon", "myDescription", startDate, endDate, 100, 200, "myImage");
+            Date startDate = new Date();
+			System.out.println(startDate);
+			Date endDate = new Date(119,1,20);
+			System.out.println(endDate);
+			//Coupon coupon = new Coupon(0, 0, Category.food,"myCoupon", "myDescription", startDate, endDate, 100, 200, "myImage");
 
             //Create an instance of Coupon with updated values to insert into "Update" method
 
