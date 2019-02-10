@@ -20,8 +20,8 @@ public class Program {
 		try {
 
 			System.out.println("Welcome to the DBDAO program");
-			testCompaniesDBDAO();
-			testCustomersDBDAO();
+//			testCompaniesDBDAO();
+//			testCustomersDBDAO();
 			testCouponsDBDAO();
 
 		} catch (Exception ex) {
@@ -48,11 +48,11 @@ public class Program {
 		companyUpdated.setPassword("abcdUpdated");
 		companyUpdated.setId(5);
 
-		companiesDBDAO.addCompany(company);
+//		companiesDBDAO.addCompany(company);
 		System.out.println(companiesDBDAO.isCompanyExists("johnBryce@gmail.com", "abcd"));
 		companiesDBDAO.updateCompany(companyUpdated);
-		Company company3 = companiesDBDAO.getOneCompany(5);
-		System.out.println("Company3 ID: " + company3.getId());
+//		Company company3 = companiesDBDAO.getOneCompany(5);
+		System.out.println("Company ID: " + company.getId());
 		
 	}
 	
@@ -62,9 +62,10 @@ public class Program {
 		int randomNumber = (int) (Math.random()*100);
 
 		// Create an instance of Coupon with values
-		Coupon coupon = new Coupon(randomNumber, randomNumber, Category.Amusement_Park, "myCoupon", "myDescription", new Date(), new Date(119, 1, 20), 100, 200,
+		Coupon coupon = new Coupon(1, Category.Amusement_Park, "myCoupon", "myDescription", new Date(), new Date(119, 1, 20), 100, 200,
 				"myImage");
-//		couponsDBDAO.addCoupon(coupon);
+		System.out.println("Adding a new Coupon");
+		couponsDBDAO.addCoupon(coupon);
 
 		// Create an instance of Coupon with updated values to insert into "updateCoupon"
 		Coupon updatedCoupon = new Coupon(randomNumber,randomNumber, Category.Pool, "myUpdatedCoupon", "myDescription", new Date(),

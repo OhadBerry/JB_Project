@@ -24,7 +24,7 @@ public class CouponsDBDAO implements  CouponsDAO{
 		try {
 			
 			connection = connectionPool.getConnection();
-			
+/*			
 			//Adding Values to Parent table before adding foreign keys to child table
 			String sqlCategories = String.format("INSERT INTO Categories("
 					+ "ID, "
@@ -47,7 +47,7 @@ public class CouponsDBDAO implements  CouponsDAO{
 					coupon.setId(id); // Add the new created id into the company object.
 				}
 			}				
-			
+*/			
 			//Preparing Dates in String format in order to be read by SQL server
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			String startDateString = format.format(coupon.getStartDate() );
