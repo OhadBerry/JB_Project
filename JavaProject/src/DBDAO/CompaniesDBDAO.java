@@ -80,6 +80,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
 				preparedStatement.executeUpdate();
 			}
 		} finally {
+			System.out.println("Company Updated to " + company.getName());
 			connectionPool.restoreConnection(connection);
 		}
 	}
