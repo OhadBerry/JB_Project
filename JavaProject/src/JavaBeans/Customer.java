@@ -17,13 +17,25 @@ public class Customer {
 	public Customer(int id, String firstName, String lastName, String email, String password,
 			ArrayList<Coupon> coupons) {
 		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
-		this.coupons = coupons;
+		this.setId(id);
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
+		this.setEmail(email);
+		this.setPassword(password);
+		this.setCoupons(coupons);
 	}
+	
+	public Customer(String firstName, String lastName, String email, String password,
+			ArrayList<Coupon> coupons) {
+		super();
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
+		this.setEmail(email);
+		this.setPassword(password);
+		this.setCoupons(coupons);
+	}
+	
+	public Customer() {};
 	
 //------------------Getters/Setters----------------------	
 	
@@ -63,7 +75,16 @@ public class Customer {
 	public void setCoupons(ArrayList<Coupon> coupons) {
 		this.coupons = coupons;
 	}
+
 	
+	
+	//------------------Methods ----------------------
+	
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", password=" + password + ", coupons=" + coupons + "]";
+	}
 	
 
 }

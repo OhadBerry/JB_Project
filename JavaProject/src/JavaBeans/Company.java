@@ -5,23 +5,34 @@ public class Company {
 	
 //------------------Properties----------------------
 	
-	private int id;
-	private String name;
-	private String email;
-	private String password;
-	private ArrayList<Coupon> coupons;
+	private int id = 0;
+	private String name = "MyCompany";
+	private String email = "MyCompanyEmail@Email.com";
+	private String password = "MyCompanyPassword";
+	private ArrayList<Coupon> coupons = null;
 
 	
 //------------------Constructor----------------------
 	
 	public Company(int id, String name, String email, String password, ArrayList<Coupon> coupons) {
 		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.coupons = coupons;
+		this.setId(id);
+		this.setName(name);
+		this.setEmail(email);
+		this.setPassword(password);
+		this.setCoupons(coupons);
 	}
+	
+	public Company(String name, String email, String password, ArrayList<Coupon> coupons) {
+		super();
+		this.setName(name);
+		this.setEmail(email);
+		this.setPassword(password);
+		this.setCoupons(coupons);
+	}
+	
+	public Company() {}
+	
 	
 //------------------Getters/Setters----------------------
 	
@@ -55,6 +66,16 @@ public class Company {
 	public void setCoupons(ArrayList<Coupon> coupons) {
 		this.coupons = coupons;
 	}
+	
+
+//------------------Methods ----------------------
+
+	@Override
+	public String toString() {
+		return "Company [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", coupons="
+				+ coupons + "]";
+	}
+	
 	
 	
 

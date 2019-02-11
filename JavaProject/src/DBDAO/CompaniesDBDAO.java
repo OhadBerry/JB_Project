@@ -21,15 +21,15 @@ public class CompaniesDBDAO implements CompaniesDAO {
 
 			String sql = String.format("SELECT Count(*) AS Count FROM COMPANIES WHERE EMAIL = '%s' AND PASSWORD = '%s'",
 					email, password);
-
+			
 			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
-					resultSet.next();
+					resultSet.first();
 
 					int count = resultSet.getInt("Count");
-
+					
 					return (count > 0);
 				}
 			}
@@ -70,17 +70,17 @@ public class CompaniesDBDAO implements CompaniesDAO {
 		Connection connection = null;
 
 		try {
-
 			connection = connectionPool.getConnection();
-
+							
 			String sql = String.format("UPDATE COMPANIES SET NAME='%s', EMAIL='%s', PASSWORD='%s' WHERE ID=%d",
-					company.getName(), company.getEmail(), company.getPassword(), company.getId());
+					company.getName(), company.getEmail(), company.getPassword(), company.getId());			
 
 			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 				preparedStatement.executeUpdate();
-			}
+			}				
+			
+			
 		} finally {
-			System.out.println("Company Updated to " + company.getName());
 			connectionPool.restoreConnection(connection);
 		}
 	}
@@ -93,8 +93,8 @@ public class CompaniesDBDAO implements CompaniesDAO {
 
 			connection = connectionPool.getConnection();
 
-			String sql = String.format("DELETE FROM COMPANIES WHERE ID=%d", companyID);
-
+			String sql = String.format("DELETE FROM `javaproject`.`companies` WHERE ID='%d';", companyID);
+			
 			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 				preparedStatement.executeUpdate();
 			}
@@ -171,7 +171,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
 						String email = resultSet.getString("EMAIL");
 						String password = resultSet.getString("PASSWORD");
 						Company company = new Company(id, name, email, password, null);
-							return company;
+						return company;
 					}
 				}
 			}

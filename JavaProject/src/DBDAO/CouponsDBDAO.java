@@ -4,12 +4,10 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import DAO.CouponsDAO;
-import JavaBeans.Company;
 import JavaBeans.Coupon;
 import JavaBeans.Category;
 
@@ -24,30 +22,7 @@ public class CouponsDBDAO implements  CouponsDAO{
 		try {
 			
 			connection = connectionPool.getConnection();
-/*			
-			//Adding Values to Parent table before adding foreign keys to child table
-			String sqlCategories = String.format("INSERT INTO Categories("
-					+ "ID, "
-					+ "Name)"
-					+ "VALUES('%d', '%s')",
-					coupon.getCategory_id(),
-					coupon.getCategory());
 			
-			System.out.println(sqlCategories);		
-
-			
-			try (PreparedStatement preparedStatement = connection.prepareStatement(sqlCategories,
-					PreparedStatement.RETURN_GENERATED_KEYS)) {
-
-				preparedStatement.executeUpdate();
-
-				try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
-					resultSet.next();
-					int id = resultSet.getInt(1);
-					coupon.setId(id); // Add the new created id into the company object.
-				}
-			}				
-*/			
 			//Preparing Dates in String format in order to be read by SQL server
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			String startDateString = format.format(coupon.getStartDate() );
@@ -129,8 +104,6 @@ public class CouponsDBDAO implements  CouponsDAO{
 					coupon.getImage(),
 					coupon.getId());
 			
-			System.out.println(sql);
-
 			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 				preparedStatement.executeUpdate();
 			} 
@@ -226,7 +199,7 @@ public class CouponsDBDAO implements  CouponsDAO{
 
 						Coupon coupon = new Coupon(id, company_id, category, title, description, startDate, endDate, amount, price, image);
 
-							return coupon;
+						return coupon;
 					}
 				}
 			}
@@ -250,15 +223,13 @@ public class CouponsDBDAO implements  CouponsDAO{
 					"INSERT INTO customers_vs_coupons(" + "customer_id, " + "coupon_id) " + "VALUES('%d', '%d')",
 					customerID, couponID);
 
-			System.out.println(sql);
-
 			try (PreparedStatement preparedStatement = connection.prepareStatement(sql,
 					PreparedStatement.RETURN_GENERATED_KEYS)) {
 
 				preparedStatement.executeUpdate();
 
 				try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
-					resultSet.next();
+					resultSet.first();
 					int id = resultSet.getInt(1);
 					System.out.println("Returned ID is: " + id); // Print out the new created ID.
 				}
@@ -269,9 +240,21 @@ public class CouponsDBDAO implements  CouponsDAO{
 	}
 
 	@Override
-	public void deleteCouponPurchase(int customerID, int couponID) {
-		// TODO Auto-generated method stub
-		
+	public void deleteCouponPurchase(int customerID, int couponID) throws Exception {
+		Connection connection = null;
+
+		try {
+
+			connection = connectionPool.getConnection();
+
+			String sql = String.format("DELETE FROM customers_vs_coupons WHERE ID=%d", customerID);
+
+			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+				preparedStatement.executeUpdate();
+			}
+		} finally {
+			connectionPool.restoreConnection(connection);
+		}
 	}
 
 }
