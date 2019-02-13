@@ -18,9 +18,9 @@ public class Program {
 		try {
 
 			System.out.println("Welcome to the DBDAO program");
-//			testCompaniesDBDAO();
+			testCompaniesDBDAO();
 			testCouponsDBDAO();
-//			testCustomersDBDAO();
+			testCustomersDBDAO();
 
 		} catch (Exception ex) {
 
