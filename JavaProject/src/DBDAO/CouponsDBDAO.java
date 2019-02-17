@@ -247,7 +247,7 @@ public class CouponsDBDAO implements  CouponsDAO{
 
 			connection = connectionPool.getConnection();
 
-			String sql = String.format("DELETE FROM customers_vs_coupons WHERE ID=%d", customerID);
+			String sql = String.format("DELETE FROM customers_vs_coupons WHERE CUSTOMER_ID=%d && Coupon_ID =%d", customerID,couponID );
 
 			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 				preparedStatement.executeUpdate();

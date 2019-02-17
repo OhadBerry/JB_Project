@@ -1,12 +1,14 @@
 package DBDAO;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import DAO.CustomersDAO;
-
+import JavaBeans.Category;
+import JavaBeans.Coupon;
 import JavaBeans.Customer;
 
 public class CustomersDBDAO implements CustomersDAO{
@@ -151,7 +153,7 @@ public class CustomersDBDAO implements CustomersDAO{
 						String email = resultSet.getString("email");
 						String password = resultSet.getString("password");
 
-						Customer customer = new Customer(id, firstName, lastName, email, password,null);
+						Customer customer = new Customer(id, firstName, lastName, email, password,getCouponsByCustomerID(id));
 
 						allCustomers.add(customer);
 					}
@@ -185,7 +187,7 @@ public class CustomersDBDAO implements CustomersDAO{
 						String email = resultSet.getString("email");
 						String password = resultSet.getString("password");
 
-						Customer customer = new Customer(id, firstName, lastName, email, password,null);
+						Customer customer = new Customer(id, firstName, lastName, email, password,getCouponsByCustomerID(id));
 
 						return customer;
 					}
@@ -196,5 +198,39 @@ public class CustomersDBDAO implements CustomersDAO{
 		}
 		return null;
 	}
+	
+	private ArrayList<Coupon> getCouponsByCustomerID(int customerID) throws Exception {
+		Connection connection = null;
+
+		try {
+			connection = connectionPool.getConnection();
+			
+			String sql = String.format("SELECT * FROM customers_vs_coupons where CUSTOMER_ID=%d", customerID);
+			
+			//Creating an instance of CouponsDBDAO in order to get the coupons which contain this companyID
+			CouponsDBDAO couponsDBDAO = new CouponsDBDAO();
+			ArrayList<Coupon> thisCustomerCoupons = new ArrayList<Coupon>();
+
+			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+					while (resultSet.next()) {
+						
+						int couponID = resultSet.getInt("Coupon_ID");
+						
+						thisCustomerCoupons.add(couponsDBDAO.getOneCoupon(couponID));
+
+					}
+
+					return thisCustomerCoupons;
+				}
+			}
+		} finally {
+			connectionPool.restoreConnection(connection);
+		}
+	}
+	
+	
 
 }

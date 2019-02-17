@@ -21,6 +21,7 @@ public class Program {
 			testCompaniesDBDAO();
 			testCouponsDBDAO();
 			testCustomersDBDAO();
+			
 
 		} catch (Exception ex) {
 

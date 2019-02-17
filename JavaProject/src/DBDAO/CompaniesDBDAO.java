@@ -145,8 +145,17 @@ public class CompaniesDBDAO implements CompaniesDAO {
 		try {
 			connection = connectionPool.getConnection();
 
-			ArrayList<Coupon> allCoupons = getOneCompany(id).getCoupons();
-			return allCoupons;
+			//Creating an instance of CouponsDBDAO in order to get the coupons which contain this companyID
+			CouponsDBDAO couponsDBDAO = new CouponsDBDAO();
+			ArrayList<Coupon> allCoupons = couponsDBDAO.getAllCoupons();
+			ArrayList<Coupon> thisCompanyCoupons = new ArrayList<Coupon>();
+			
+			//Adding only coupons to thisCompanyCoupons that have the same CompanyID as this companyID
+			for (Coupon thisCoupon : allCoupons)
+				if(thisCoupon.getCompany_id() == id)
+					thisCompanyCoupons.add(thisCoupon);
+			return thisCompanyCoupons;
+			
 		} finally {
 			connectionPool.restoreConnection(connection);
 		}
@@ -170,7 +179,8 @@ public class CompaniesDBDAO implements CompaniesDAO {
 						String name = resultSet.getString("NAME");
 						String email = resultSet.getString("EMAIL");
 						String password = resultSet.getString("PASSWORD");
-						Company company = new Company(id, name, email, password, null);
+						
+						Company company = new Company(id, name, email, password, getCouponsByCompanyID(companyID));
 						return company;
 					}
 				}

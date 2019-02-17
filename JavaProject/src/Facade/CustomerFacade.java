@@ -25,7 +25,6 @@ public class CustomerFacade extends ClientFacade {
 		return false;}
 	
 	public void purchaseCoupon(Coupon coupon) throws Exception {
-		couponsDAO.
 		couponsDAO.addCouponPurchase(customerID,coupon.getId());
 		
 	}
