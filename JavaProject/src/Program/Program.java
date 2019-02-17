@@ -19,8 +19,9 @@ public class Program {
 
 			System.out.println("Welcome to the DBDAO program");
 			testCompaniesDBDAO();
-			testCouponsDBDAO();
 			testCustomersDBDAO();
+			testCouponsDBDAO();
+			
 			
 
 		} catch (Exception ex) {
@@ -92,74 +93,6 @@ public class Program {
 		
 	}
 	
-	public static void testCouponsDBDAO() throws Exception {
-		
-		//Creating an Instance of couponsDBDAO
-		CouponsDBDAO couponsDBDAO = new CouponsDBDAO();
-		
-		//------------------Adding a 10 new Coupons--------------------------------
-		for (int i = 1; i <= 10; i++) {
-			// Create an instance of Coupon with values
-			String couponName = "myCoupon "+i;
-			@SuppressWarnings("deprecation")
-			Coupon coupon = new Coupon(1, Category.Amusement_Park, couponName, "myDescription", new Date(), new Date(119, 1, 20), 100, 200,
-					"myImage");					
-			// Adding a new Coupon
-			System.out.println("Adding a new Coupon "+couponName+" to Table 'Coupons'");
-			couponsDBDAO.addCoupon(coupon);
-			System.out.println("Coupon "+couponName+" Added to Table 'Coupons'");
-		}
-	
-		
-		//------------------Updating a Coupon with updateCoupon--------------------------------	
-		// Create an instance of Coupon with updated values to insert into "updateCoupon"
-		int couponUpdatedID = 28;
-		@SuppressWarnings("deprecation")
-		Coupon updatedCoupon = new Coupon(couponUpdatedID,1, Category.Pool, "myUpdatedCoupon", "myDescription", new Date(),
-				new Date(119, 1, 20), 100, 200, "myImage");
-		
-		//Updating Company
-		System.out.println("Updating Coupon "+couponUpdatedID+" with updateCoupon");
-		couponsDBDAO.updateCoupon(updatedCoupon);
-		System.out.println("Updated Coupon "+couponUpdatedID+" with updateCoupon");
-
-		
-		//------------------Deleting a Coupon with deleteCoupon--------------------------------	
-		// Setting the ID of the coupon that will be deleted
-		int couponDeleteID = 29;
-		
-		//Deleting Coupon
-		System.out.println("Deleting Coupon "+couponDeleteID+" with deleteCoupon");
-		couponsDBDAO.deleteCoupon(couponDeleteID);		
-		System.out.println("Deleted Coupon "+couponDeleteID+" with deleteCoupon");
-	
-		
-		//------------------Testing get one Coupon with getOneCoupon--------------------------------
-		// Setting the ID of the coupon that will be read
-		int oneCouponID = 30;
-		
-		System.out.println("Reading Coupon "+oneCouponID+" with getOneCoupon");
-		Coupon oneCoupon = couponsDBDAO.getOneCoupon(oneCouponID);
-		System.out.println("Read Coupon "+oneCouponID+" with getOneCoupon");
-		System.out.println("Coupon number "+oneCouponID+" details are:");
-		System.out.println(oneCoupon.toString());
-	
-		
-		//------------------Testing get all Companies with getAllCompanies--------------------------------
-		System.out.println("Reading all coupons with getAllCoupons");
-		ArrayList<Coupon> allCoupons = couponsDBDAO.getAllCoupons();
-		System.out.println("Read all coupons with getAllCoupons");
-		System.out.println("All coupons data is:");
-		System.out.println(allCoupons);
-		
-		//------------------Testing addCouponPurchase--------------------------------
-		int customerTestID = 5;
-		int couponTestID = 31;
-		System.out.println("Adding Coupon Purchase with Customer ID: "+customerTestID+" and Coupon ID: "+couponTestID);
-		couponsDBDAO.addCouponPurchase(customerTestID,couponTestID);		
-		System.out.println("Added Coupon Purchase with Customer ID: "+customerTestID+" and Coupon ID: "+couponTestID);
-
-	}
 	
 	public static void testCustomersDBDAO() throws Exception {
 		
@@ -225,5 +158,74 @@ public class Program {
 		System.out.println(allCustomers);
 		
 
+	}
+
+
+	public static void testCouponsDBDAO() throws Exception {
+	
+	//Creating an Instance of couponsDBDAO
+	CouponsDBDAO couponsDBDAO = new CouponsDBDAO();
+	
+	//------------------Adding a 10 new Coupons--------------------------------
+	for (int i = 1; i <= 10; i++) {
+		// Create an instance of Coupon with values
+		String couponName = "myCoupon "+i;
+		@SuppressWarnings("deprecation")
+		Coupon coupon = new Coupon(1, Category.Amusement_Park, couponName, "myDescription", new Date(), new Date(119, 1, 20), 100, 200,
+				"myImage");					
+		// Adding a new Coupon
+		System.out.println("Adding a new Coupon "+couponName+" to Table 'Coupons'");
+		couponsDBDAO.addCoupon(coupon);
+		System.out.println("Coupon "+couponName+" Added to Table 'Coupons'");
+	}
+
+	
+	//------------------Updating a Coupon with updateCoupon--------------------------------	
+	// Create an instance of Coupon with updated values to insert into "updateCoupon"
+	int couponUpdatedID = 4;
+	@SuppressWarnings("deprecation")
+	Coupon updatedCoupon = new Coupon(couponUpdatedID,1, Category.Pool, "myUpdatedCoupon", "myDescription", new Date(),
+			new Date(119, 1, 20), 100, 200, "myImage");
+	
+	//Updating Company
+	System.out.println("Updating Coupon "+couponUpdatedID+" with updateCoupon");
+	couponsDBDAO.updateCoupon(updatedCoupon);
+	System.out.println("Updated Coupon "+couponUpdatedID+" with updateCoupon");
+
+	
+	//------------------Deleting a Coupon with deleteCoupon--------------------------------	
+	// Setting the ID of the coupon that will be deleted
+	int couponDeleteID = 3;
+	
+	//Deleting Coupon
+	System.out.println("Deleting Coupon "+couponDeleteID+" with deleteCoupon");
+	couponsDBDAO.deleteCoupon(couponDeleteID);		
+	System.out.println("Deleted Coupon "+couponDeleteID+" with deleteCoupon");
+
+	
+	//------------------Testing get one Coupon with getOneCoupon--------------------------------
+	// Setting the ID of the coupon that will be read
+	int oneCouponID = 6;
+	
+	System.out.println("Reading Coupon "+oneCouponID+" with getOneCoupon");
+	Coupon oneCoupon = couponsDBDAO.getOneCoupon(oneCouponID);
+	System.out.println("Read Coupon "+oneCouponID+" with getOneCoupon");
+	System.out.println("Coupon number "+oneCouponID+" details are:");
+	System.out.println(oneCoupon.toString());
+
+	
+	//------------------Testing get all Companies with getAllCompanies--------------------------------
+	System.out.println("Reading all coupons with getAllCoupons");
+	ArrayList<Coupon> allCoupons = couponsDBDAO.getAllCoupons();
+	System.out.println("Read all coupons with getAllCoupons");
+	System.out.println("All coupons data is:");
+	System.out.println(allCoupons);
+	
+	//------------------Testing addCouponPurchase--------------------------------
+	int customerTestID = 8;
+	int couponTestID = 8;
+	System.out.println("Adding Coupon Purchase with Customer ID: "+customerTestID+" and Coupon ID: "+couponTestID);
+	couponsDBDAO.addCouponPurchase(customerTestID,couponTestID);		
+	System.out.println("Added Coupon Purchase with Customer ID: "+customerTestID+" and Coupon ID: "+couponTestID);
 	}
 }

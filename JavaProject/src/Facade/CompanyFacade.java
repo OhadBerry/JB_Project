@@ -40,24 +40,24 @@ public class CompanyFacade extends ClientFacade {
 		
 		public ArrayList<Coupon> getCompanyCoupons() throws Exception{
 			ArrayList<Coupon> allCoupons = couponsDAO.getAllCoupons();
-			ArrayList<Coupon> allCouponsByCompany = null;
+			ArrayList<Coupon> couponsByCompany = new ArrayList<Coupon>();
 			for (Coupon c : allCoupons) {
 				if (c.getCompany_id() == companyID) {
-					allCouponsByCompany.add(c);
+					couponsByCompany.add(c);
 				}
 			}
-			return allCouponsByCompany;
+			return couponsByCompany;
 		}
 		
 		public ArrayList<Coupon> getCompanyCoupons(Category category) throws Exception{
 			ArrayList<Coupon> allCoupons = couponsDAO.getAllCoupons();
-			ArrayList<Coupon> allCouponsByCompanyAndCategory = null;
+			ArrayList<Coupon> couponsByCompanyAndCategory = new ArrayList<Coupon>();
 			for (Coupon c : allCoupons) {
 				if (c.getCompany_id() == companyID && c.getCategory() == category) {
-					allCouponsByCompanyAndCategory.add(c);
+					couponsByCompanyAndCategory.add(c);
 				}
 			}
-			return allCouponsByCompanyAndCategory;
+			return couponsByCompanyAndCategory;
 			
 		}
 		

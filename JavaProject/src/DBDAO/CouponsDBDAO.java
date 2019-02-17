@@ -227,12 +227,6 @@ public class CouponsDBDAO implements  CouponsDAO{
 					PreparedStatement.RETURN_GENERATED_KEYS)) {
 
 				preparedStatement.executeUpdate();
-
-				try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
-					resultSet.first();
-					int id = resultSet.getInt(1);
-					System.out.println("Returned ID is: " + id); // Print out the new created ID.
-				}
 			}
 		} finally {
 			connectionPool.restoreConnection(connection);
