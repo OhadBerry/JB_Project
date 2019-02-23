@@ -10,6 +10,7 @@ public interface CustomersDAO {
 	public void deleteCustomer (int customerID) throws Exception;
 	public ArrayList<Customer> getAllCustomers() throws Exception;
 	public Customer getOneCustomer(int customerID) throws Exception;
+	public int getCustomerID(String email, String password) throws Exception;
 
 }
 

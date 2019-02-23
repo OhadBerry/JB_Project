@@ -25,8 +25,6 @@ public class ConnectionPool {
 			try {
 				Connection conn = DriverManager.getConnection(connectionString,"root",null);
 				connections.push(conn);
-				System.out.println("Connection "+i+" pushed");
-
 			}
 			catch (SQLException e) { }
 		}

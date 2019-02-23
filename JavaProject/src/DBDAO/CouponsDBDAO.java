@@ -250,5 +250,31 @@ public class CouponsDBDAO implements  CouponsDAO{
 			connectionPool.restoreConnection(connection);
 		}
 	}
+	
+	public boolean isCouponPurchaseExists(int customerID, int couponID) throws Exception {
+
+		Connection connection = null;
+
+		try {
+			connection = connectionPool.getConnection();
+
+			String sql = String.format("SELECT Count(*) AS Count FROM customers_vs_coupons WHERE CUSTOMER_ID = '%d' AND Coupon_ID = '%d'",
+					customerID, couponID);
+			
+			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+					resultSet.first();
+
+					int count = resultSet.getInt("Count");
+					
+					return (count > 0);
+				}
+			}
+		} finally {
+			connectionPool.restoreConnection(connection);
+		}
+	}
 
 }

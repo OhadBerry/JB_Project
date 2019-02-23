@@ -10,5 +10,6 @@ public interface CompaniesDAO {
 	public void deleteCompany (int companyID) throws Exception;
 	public ArrayList<Company> getAllCompanies() throws Exception;
 	public Company getOneCompany(int companyID) throws Exception;
+	public int getCompanyID(String email, String password) throws Exception;
 
 }

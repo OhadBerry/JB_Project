@@ -105,6 +105,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
 
 	public ArrayList<Company> getAllCompanies() throws Exception {
 
+		
 		Connection connection = null;
 
 		try {
@@ -127,7 +128,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
 						ArrayList<Coupon> coupons = getCouponsByCompanyID(id);
 
 						Company company = new Company(id, name, email, password, coupons);
-
+						
 						allCompanies.add(company);
 					}
 
@@ -189,6 +190,33 @@ public class CompaniesDBDAO implements CompaniesDAO {
 			connectionPool.restoreConnection(connection);
 		}
 		return null;
+	}
+	
+	
+	public int getCompanyID(String email, String password) throws Exception {
+		Connection connection = null;
+
+		try {
+			connection = connectionPool.getConnection();
+
+			String sql = String.format("SELECT * from Companies WHERE EMAIL = '%s' AND PASSWORD = '%s'",
+
+					email, password);
+			
+			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+					resultSet.first();
+
+					int id = resultSet.getInt("ID");
+					
+					return id;
+				}
+			}
+		} finally {
+			connectionPool.restoreConnection(connection);
+		}
 	}
 
 }

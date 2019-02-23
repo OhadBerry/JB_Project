@@ -5,7 +5,7 @@ public class Company {
 	
 //------------------Properties----------------------
 	
-	private int id = 0;
+	private int id = 1;
 	private String name = "MyCompany";
 	private String email = "MyCompanyEmail@Email.com";
 	private String password = "MyCompanyPassword";

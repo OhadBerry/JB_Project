@@ -5,7 +5,7 @@ public class Coupon {
 	
 //------------------Properties----------------------	
 	
-	private int id;
+	private int id = 1;
 	private int company_id;
 	private Category category;
 	private String title;
@@ -20,32 +20,36 @@ public class Coupon {
 	
 	public Coupon(int id, int company_id, Category category, String title, String description, Date startDate,
 			Date endDate, int amount, double price, String image) {
+		
 		super();
-		this.id = id;
-		this.company_id = company_id;
-		this.category = category;
-		this.title = title;
-		this.description = description;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.amount = amount;
-		this.price = price;
-		this.image = image;
+		this.setId(id);
+		this.setCompany_id(company_id);
+		this.setCategory_id(category);
+		this.setTitle(title);
+		this.setDescription(description);
+		this.setStartDate(startDate);
+		this.setEndDate(endDate);
+		this.setAmount(amount);		
+		this.setPrice(price);
+		this.setImage(image);
+		
 	}
 	
 	public Coupon(int company_id, Category category, String title, String description, Date startDate,
 			Date endDate, int amount, double price, String image) {
 		super();
-		this.company_id = company_id;
-		this.category = category;
-		this.title = title;
-		this.description = description;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.amount = amount;
-		this.price = price;
-		this.image = image;
+		this.setCompany_id(company_id);
+		this.setCategory_id(category);
+		this.setTitle(title);
+		this.setDescription(description);
+		this.setStartDate(startDate);
+		this.setEndDate(endDate);
+		this.setAmount(amount);		
+		this.setPrice(price);
+		this.setImage(image);
 	}
+	
+	public Coupon() {};
 
 //------------------Getters/Setters----------------------	
 

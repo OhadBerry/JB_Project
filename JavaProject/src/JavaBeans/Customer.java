@@ -5,7 +5,7 @@ public class Customer {
 
 //------------------Properties----------------------
 
-	private int id;
+	private int id = 1;
 	private String firstName;
 	private String lastName;
 	private String email;

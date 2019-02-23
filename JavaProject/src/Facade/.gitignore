@@ -2,3 +2,5 @@
 /ClientFacade.class
 /CompanyFacade.class
 /CustomerFacade.class
+/ClientType.class
+/LoginManager.class

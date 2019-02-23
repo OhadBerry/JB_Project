@@ -40,6 +40,34 @@ public class CustomersDBDAO implements CustomersDAO{
 		}
 	}
 
+
+	public int getCustomerID(String email, String password) throws Exception {
+		Connection connection = null;
+
+		try {
+			connection = connectionPool.getConnection();
+
+			String sql = String.format("SELECT * from Customers WHERE EMAIL = '%s' AND PASSWORD = '%s'",
+
+					email, password);
+			
+			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+					resultSet.first();
+
+					int id = resultSet.getInt("ID");
+					
+					return id;
+				}
+			}
+		} finally {
+			connectionPool.restoreConnection(connection);
+		}
+	}
+	
+
 	@Override
 	public void addCustomer(Customer customer) throws Exception {
 		Connection connection = null;
@@ -59,9 +87,7 @@ public class CustomersDBDAO implements CustomersDAO{
 					customer.getEmail(),
 					customer.getPassword()
 					);
-			
-			System.out.println(sql);		
-			
+						
 			connection = connectionPool.getConnection();
 			
 			try (PreparedStatement preparedStatement = connection.prepareStatement(sql,
