@@ -2,12 +2,14 @@ package Facade;
 
 import DAO.CompaniesDAO;
 import DAO.CustomersDAO;
+import DBDAO.CompaniesDBDAO;
+import DBDAO.CustomersDBDAO;
 
 public class LoginManager {
 	
 	private static LoginManager instance = new LoginManager();;
-	private CompaniesDAO companiesDAO;
-	private CustomersDAO customersDAO;
+	private CompaniesDAO companiesDAO = new CompaniesDBDAO();
+	private CustomersDAO customersDAO = new CustomersDBDAO();
 
 	
 	
@@ -31,9 +33,12 @@ public class LoginManager {
 				}
 			
 			case Company:
+			{
+				System.out.println(email+"|"+password);
 				if (companiesDAO.isCompanyExists(email,password)){
 					return new CompanyFacade(companiesDAO.getCompanyID(email, password));
 				}
+			}
 			
 			case Customer:
 				if (customersDAO.isCustomerExists(email,password)) {

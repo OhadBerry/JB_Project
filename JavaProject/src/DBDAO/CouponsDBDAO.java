@@ -49,9 +49,7 @@ public class CouponsDBDAO implements  CouponsDAO{
 					coupon.getAmount(), 
 					(int)coupon.getPrice(),
 					coupon.getImage() );
-			
-			System.out.println(sql);		
-		
+					
 			try (PreparedStatement preparedStatement = connection.prepareStatement(sql,
 					PreparedStatement.RETURN_GENERATED_KEYS)) {
 

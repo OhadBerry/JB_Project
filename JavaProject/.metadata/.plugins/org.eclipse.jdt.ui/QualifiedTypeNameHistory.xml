@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.util.Date"/>
-    <fullyQualifiedTypeName name="JavaBeans.Customer"/>
     <fullyQualifiedTypeName name="DBDAO.CouponsDBDAO"/>
     <fullyQualifiedTypeName name="Test.TestDBDAO"/>
     <fullyQualifiedTypeName name="DBDAO.CompaniesDBDAO"/>
+    <fullyQualifiedTypeName name="JavaBeans.Company"/>
+    <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="JavaBeans.Customer"/>
+    <fullyQualifiedTypeName name="JavaBeans.Coupon"/>
+    <fullyQualifiedTypeName name="java.util.Date"/>
 </qualifiedTypeNameHistroy>

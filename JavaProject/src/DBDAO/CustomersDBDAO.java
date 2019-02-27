@@ -74,14 +74,12 @@ public class CustomersDBDAO implements CustomersDAO{
 
 		try {
 			String sql = String.format("INSERT INTO Customers("
-					+ "ID, "
 					+ "FIRSTNAME, "
 					+ "LASTNAME, "
 					+ "EMAIL, "
 					+ "PASSWORD"
 					+ ") " 
-					+ "VALUES('%d', '%s', '%s', '%s', '%s')",
-					customer.getId(),
+					+ "VALUES('%s', '%s', '%s', '%s')",
 					customer.getFirstName(),
 					customer.getLastName(),
 					customer.getEmail(),

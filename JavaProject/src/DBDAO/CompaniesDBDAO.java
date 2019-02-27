@@ -153,8 +153,9 @@ public class CompaniesDBDAO implements CompaniesDAO {
 			
 			//Adding only coupons to thisCompanyCoupons that have the same CompanyID as this companyID
 			for (Coupon thisCoupon : allCoupons)
-				if(thisCoupon.getCompany_id() == id)
+				if(thisCoupon.getCompany_id() == id) {
 					thisCompanyCoupons.add(thisCoupon);
+				}
 			return thisCompanyCoupons;
 			
 		} finally {

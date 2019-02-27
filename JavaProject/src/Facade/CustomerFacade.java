@@ -41,30 +41,46 @@ public class CustomerFacade extends ClientFacade {
 	}
 	
 	public ArrayList<Coupon> getCustomerCoupons() throws Exception{
-		return couponsDAO.getAllCoupons();
+		
+		ArrayList<Coupon> allCoupons = couponsDAO.getAllCoupons();
+		ArrayList<Coupon> theCustomerCoupons = new ArrayList<Coupon>();
+		
+		if (allCoupons != null)
+			for (Coupon theCoupon : allCoupons) {
+				if (couponsDAO.isCouponPurchaseExists(customerID,theCoupon.getId())) {
+					theCustomerCoupons.add(theCoupon);
+				}
+			}
+		
+		return theCustomerCoupons;
+		
 	}
 	
 	public ArrayList<Coupon> getCustomerCoupons(Category category) throws Exception{
-		ArrayList<Coupon> allCoupons = couponsDAO.getAllCoupons();
-		ArrayList<Coupon> allCouponsByCategory = new ArrayList<Coupon>();
-		for (Coupon c : allCoupons) {
-			if (c.getCategory() == category) {
-				allCouponsByCategory.add(c);
+		
+		ArrayList<Coupon> theCustomerCoupons = getCustomerCoupons();
+		ArrayList<Coupon> couponsByCustomerAndCategory = new ArrayList<Coupon>();
+		if (theCustomerCoupons != null) {
+			for (Coupon c : theCustomerCoupons) {
+				if (c.getCategory() == category) {
+					couponsByCustomerAndCategory.add(c);
+				}
 			}
 		}
-		return allCouponsByCategory;
+		
+		return couponsByCustomerAndCategory;
 		
 	}
 	
 	public ArrayList<Coupon> getCustomerCoupons(double maxPrice) throws Exception{
-		ArrayList<Coupon> allCoupons = couponsDAO.getAllCoupons();
-		ArrayList<Coupon> allCouponsByPrice = new ArrayList<Coupon>();
-		for (Coupon c : allCoupons) {
+		ArrayList<Coupon> theCustomerCoupons = getCustomerCoupons();
+		ArrayList<Coupon> couponsByCustomerAndPrice = new ArrayList<Coupon>();
+		for (Coupon c : theCustomerCoupons) {
 			if (c.getPrice() <= maxPrice) {
-				allCouponsByPrice.add(c);
+				couponsByCustomerAndPrice.add(c);
 			}
 		}
-		return allCouponsByPrice;
+		return couponsByCustomerAndPrice;
 	}
 	
 	public Customer getCustomerDetails() throws Exception {
