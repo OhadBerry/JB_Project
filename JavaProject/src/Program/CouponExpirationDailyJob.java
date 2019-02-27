@@ -32,7 +32,6 @@ public class CouponExpirationDailyJob implements Runnable{
 		try {
 			quit = false;
 			while (!quit && ((new Date().getMinutes() == 00) && (new Date().getHours() == 0))) {
-				System.out.println("*****Beginning Erase Loop*****");
 				ArrayList<Coupon> allCoupons = couponsDAO.getAllCoupons();
 				if (allCoupons != null) {
 					for (Coupon theCoupon : allCoupons) {
@@ -46,15 +45,11 @@ public class CouponExpirationDailyJob implements Runnable{
 								for (Customer c : allCustomers)
 									couponsDAO.deleteCouponPurchase(c.getId(),theCoupon.getId());
 							}
-							System.out.println("Deleting Coupon");
 							couponsDAO.deleteCoupon(theCoupon.getId());
-							System.out.println("Deleting Coupon Deleted");
 						}
 					}
 				}
-				Thread.sleep(5000); //Execute only once a Second
 			}
-//			Thread.sleep(1000*60*60*24); //Execute only once a Day
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
