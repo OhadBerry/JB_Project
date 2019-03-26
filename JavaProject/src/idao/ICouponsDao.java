@@ -5,10 +5,10 @@ import javabeans.Coupon;
 
 public interface ICouponsDao {
 	
-	public void addCoupon (Coupon coupon) throws Exception;
+	public void createCoupon (Coupon coupon) throws Exception;
 	public void updateCoupon (Coupon coupon) throws Exception;
-	public void deleteCoupon (long couponID) throws Exception;
-	public Coupon getOneCouponbyId(long CouponID) throws Exception;
+	public void deleteCouponById (long couponId) throws Exception;
+	public Coupon getOneCouponbyId(long couponId) throws Exception;
 	public ArrayList<Coupon> getAllCoupons() throws Exception;
 
 }

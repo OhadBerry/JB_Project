@@ -5,8 +5,8 @@ public class Coupon {
 	
 //------------------Properties----------------------	
 	
-	private int id = 1;
-	private int company_id;
+	private long id = 1;
+	private long company_id;
 	private Category category;
 	private String title;
 	private String description;
@@ -18,7 +18,7 @@ public class Coupon {
 	
 //------------------Constructor----------------------	
 	
-	public Coupon(int id, int company_id, Category category, String title, String description, Date startDate,
+	public Coupon(long id, long company_id, Category category, String title, String description, Date startDate,
 			Date endDate, int amount, double price, String image) {
 		
 		super();
@@ -35,7 +35,7 @@ public class Coupon {
 		
 	}
 	
-	public Coupon(int company_id, Category category, String title, String description, Date startDate,
+	public Coupon(long company_id, Category category, String title, String description, Date startDate,
 			Date endDate, int amount, double price, String image) {
 		super();
 		this.setCompany_id(company_id);
@@ -54,23 +54,23 @@ public class Coupon {
 //------------------Getters/Setters----------------------	
 
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-	public int getCompany_id() {
+	public long getCompany_id() {
 		return company_id;
 	}
-	public void setCompany_id(int company_id) {
+	public void setCompany_id(long company_id) {
 		this.company_id = company_id;
 	}
 	public Category getCategory() {
 		return this.category;
 	}
 	
-	public int getCategory_id() {
+	public long getCategory_id() {
 		return this.category.ordinal();
 	}
 	public void setCategory_id(Category category) {

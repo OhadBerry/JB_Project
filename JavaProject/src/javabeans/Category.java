@@ -10,8 +10,8 @@ public enum Category {
 	
 	public static final Category values[] = values();
 
-	public static Category values(int j) {
-		return values[j];
+	public static Category values(long j) {
+		return values[(int) j];
 	}
 
 }
