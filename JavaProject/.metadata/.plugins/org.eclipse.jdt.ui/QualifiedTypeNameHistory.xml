@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="DBDAO.CouponsDBDAO"/>
     <fullyQualifiedTypeName name="Test.TestDBDAO"/>
     <fullyQualifiedTypeName name="DBDAO.CompaniesDBDAO"/>
     <fullyQualifiedTypeName name="JavaBeans.Company"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
     <fullyQualifiedTypeName name="JavaBeans.Customer"/>
+    <fullyQualifiedTypeName name="DBDAO.CouponsDBDAO"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="JavaBeans.Coupon"/>
+    <fullyQualifiedTypeName name="Facade.CustomerFacade"/>
+    <fullyQualifiedTypeName name="DBDAO.CustomersDBDAO"/>
+    <fullyQualifiedTypeName name="java.lang.Thread"/>
+    <fullyQualifiedTypeName name="Program.CouponExpirationDailyJob"/>
+    <fullyQualifiedTypeName name="javabeans.User"/>
     <fullyQualifiedTypeName name="java.util.Date"/>
+    <fullyQualifiedTypeName name="utils.JdbcUtils"/>
+    <fullyQualifiedTypeName name="exceptions.ApplicationException"/>
+    <fullyQualifiedTypeName name="java.sql.SQLException"/>
+    <fullyQualifiedTypeName name="exceptions.ErrorType"/>
+    <fullyQualifiedTypeName name="utils.DateUtils"/>
+    <fullyQualifiedTypeName name="dao.CompanyDao"/>
 </qualifiedTypeNameHistroy>

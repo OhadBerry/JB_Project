@@ -6,13 +6,30 @@ CREATE DATABASE javaproject;
 USE javaproject;
 CREATE TABLE Companies(
 
-ID 	    			int(3) AUTO_INCREMENT PRIMARY KEY,
+Company_ID 	    	bigint AUTO_INCREMENT PRIMARY KEY,
 
-NAME 	    varchar(25) NOT NULL , 
+Company_NAME 	    varchar(25) NOT NULL 
 
-EMAIL  		varchar(50)  NOT NULL , 
+);
 
-PASSWORD	varchar(25) NOT NULL 
+/* CREATE TABLE users*/
+
+USE javaproject;
+CREATE TABLE Users(
+
+user_id 		    bigint,
+
+user_name 			varchar(25),
+
+user_password       varchar(25),
+
+company_id          bigint,
+
+user_type           int(3) ,
+
+PRIMARY KEY (user_id),
+
+FOREIGN KEY (company_id) REFERENCES companies(company_id)
 
 );
 
@@ -20,17 +37,15 @@ PASSWORD	varchar(25) NOT NULL
 USE javaproject;
 CREATE TABLE  Customers(
 
-ID 	    					int(3) AUTO_INCREMENT PRIMARY KEY,
+Customer_ID                 bigint,
 
-FIRSTNAME 			varchar(25) NOT NULL ,
+Customer_FIRSTNAME 			varchar(25) NOT NULL ,
 
-LASTNAME 	    	varchar(25) NOT NULL ,
+Customer_LASTNAME 	    	varchar(25) NOT NULL ,
 
-EMAIL				varchar(50)  NOT NULL ,
+PRIMARY KEY (customer_id),
 
-PASSWORD 			varchar(25) NOT NULL
-
--- FOREIGN KEY (city_id) REFERENCES cities(city_id)
+FOREIGN KEY (Customer_ID) REFERENCES Users(User_ID)
 
 );
 
@@ -38,9 +53,9 @@ PASSWORD 			varchar(25) NOT NULL
 USE javaproject;
 CREATE TABLE categories(
 
-ID 	    		int(3) AUTO_INCREMENT PRIMARY KEY,
+Catagory_ID 	 bigint AUTO_INCREMENT PRIMARY KEY,
 
-NAME 	varchar(25)
+Catagory_NAME 	varchar(25)
 
 );
 
@@ -48,44 +63,43 @@ NAME 	varchar(25)
 USE javaproject;
 CREATE TABLE coupons(
 
-ID 	    			int(3) AUTO_INCREMENT PRIMARY KEY,
+Coupon_ID 	    		bigint AUTO_INCREMENT PRIMARY KEY,
 
-company_id			int(3) not null,
+company_id			    bigint not null,
 
-category_id			int(3) not null,
+category_id			    bigint not null,
 
-TITLE        		varchar(25),
+Coupon_TITLE        		varchar(25),
 
-DESCRIPTION      	varchar(50),
+Coupon_DESCRIPTION      	varchar(50),
 
-START_DATE       	date NULL CHECK (coupon_start_date LIKE '--/--/----'),
+Coupon_START_DATE       	date NULL CHECK (coupon_start_date LIKE '--/--/----'),
 
-END_DATE        	date NULL CHECK (coupon_end_date LIKE '--/--/----'),
+Coupon_END_DATE        	date NULL CHECK (coupon_end_date LIKE '--/--/----'),
 
-AMOUNT				int(6) Not null, 
+Coupon_AMOUNT				bigint Not null, 
 
-PRICE				double Not null, 
+Coupon_PRICE				double Not null, 
 
-IMAGE            	varchar(50),
+Coupon_IMAGE            	varchar(50),
 
 
-FOREIGN KEY (category_id) 	REFERENCES 	categories(id),
-FOREIGN KEY (company_id) 	REFERENCES 	companies(id)
+FOREIGN KEY (category_id) 	REFERENCES 	categories(Catagory_ID),
+FOREIGN KEY (company_id) 	REFERENCES 	companies(company_id)
 
 );
 
-/* CREATE TABLE customers_vs_couponscategories*/
+/* CREATE TABLE purchases*/
 USE javaproject;
-CREATE TABLE customers_vs_coupons(
+CREATE TABLE purchases(
 
-customer_id 		int(3) ,
+customer_id 		bigint ,
 
-coupon_id 			int(3) ,
+coupon_id 			bigint ,
 
 PRIMARY KEY (customer_id,coupon_id),
 
-FOREIGN KEY (coupon_id) REFERENCES coupons(id),
+FOREIGN KEY (coupon_id) REFERENCES coupons(Coupon_ID),
 
-FOREIGN KEY (customer_id) REFERENCES customers(id)
+FOREIGN KEY (customer_id) REFERENCES customers(Customer_ID)
 );
-
