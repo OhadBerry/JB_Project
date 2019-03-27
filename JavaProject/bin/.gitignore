@@ -1,5 +1,11 @@
-/DAO/
-/DBDAO/
-/Facade/
-/JavaBeans/
-/Program/
+/.classpath
+/.project
+/dao/
+/exceptions/
+/idao/
+/javabeans/
+/lib/
+/logic/
+/program/
+/test/
+/utils/

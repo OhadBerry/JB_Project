@@ -12,6 +12,7 @@ import exceptions.ApplicationException;
 import exceptions.ErrorType;
 import idao.ICouponsDao;
 import javabeans.Category;
+import javabeans.Company;
 import javabeans.Coupon;
 import utils.DateUtils;
 import utils.JdbcUtils;
@@ -73,7 +74,7 @@ public class CouponDao implements  ICouponsDao{
 			// notifies a level above.
 			e.printStackTrace();
 			throw new ApplicationException(e, ErrorType.GENERAL_ERROR,
-					DateUtils.getCurrentDateAndTimeString() + "FAILED to create a company");
+					DateUtils.getCurrentDateAndTime() + "FAILED to create a company");
 			// throw new Exception("Failed to create company " + company.toString()+"Failed
 			// " ,e);
 		} finally {
@@ -132,9 +133,7 @@ public class CouponDao implements  ICouponsDao{
 			// notifies a level above.
 			e.printStackTrace();
 			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
-					DateUtils.getCurrentDateAndTimeString() + "FAILED to create company");
-			// throw new Exception("Failed to create company " + company.toString()+"Failed
-			// " ,e);
+					DateUtils.getCurrentDateAndTime() + "FAILED to create a coupon");
 		} finally {
 			// Closing the resources
 			JdbcUtils.closeResources(connection, preparedStatement);
@@ -165,6 +164,13 @@ public class CouponDao implements  ICouponsDao{
 			// Executing the update
 			preparedStatement.executeUpdate();
 			
+		} catch (SQLException e) {
+			// **If there was an exception in the "try" block above, it is caught here and
+			// notifies a level above.
+			e.printStackTrace();
+			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to delete a coupon");
+			
 		// Closing the resources
 		} finally {
 			JdbcUtils.closeResources(connection, preparedStatement);
@@ -172,15 +178,111 @@ public class CouponDao implements  ICouponsDao{
 	}
 
 	@Override
-	public Coupon getOneCouponbyId(long couponId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public Coupon getCouponbyId(long couponId) throws Exception {
+		// Turn on the connections
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = JdbcUtils.getConnection();
+
+			// Creating the SQL query
+			String sqlStatement = "SELECT * FROM coupons WHERE coupon_id = ?";
+
+			// Combining between the syntax and our connection
+			preparedStatement = connection.prepareStatement(sqlStatement);
+
+			// Replacing the question marks in the statement above with the relevant data
+			preparedStatement.setLong(1, couponId);
+
+			// Executing the query
+			resultSet = preparedStatement.executeQuery();
+			
+			if (resultSet.next()) {
+				return extractCouponFromResultSet(resultSet);
+			}
+			
+			return null;
+				
+		}
+			catch (SQLException e) {
+				// **If there was an exception in the "try" block above, it is caught here and
+				// notifies a level above.
+				e.printStackTrace();
+			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to Delete a company");
+
+			// Closing the resources
+		} finally {
+			JdbcUtils.closeResources(connection, preparedStatement,resultSet);
+		}
 	}
 
 	@Override
 	public ArrayList<Coupon> getAllCoupons() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		// Turn on the connections
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = JdbcUtils.getConnection();
+
+			// Creating the SQL query
+			String sqlStatement = "SELECT * FROM coupons";
+
+			// Combining between the syntax and our connection
+			preparedStatement = connection.prepareStatement(sqlStatement);
+
+			// Executing the query
+			resultSet = preparedStatement.executeQuery();
+			
+			ArrayList<Coupon> allCoupons = new ArrayList<Coupon>();
+			
+			while (resultSet.next()) {
+				allCoupons.add(extractCouponFromResultSet(resultSet));	
+			}
+			return allCoupons;
+		}
+			catch (SQLException e) {
+				// **If there was an exception in the "try" block above, it is caught here and
+				// notifies a level above.
+				e.printStackTrace();
+			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to Delete a company");
+
+			// Closing the resources
+		} finally {
+			JdbcUtils.closeResources(connection, preparedStatement,resultSet);
+		}
 	}
-	
+
+
+	private Coupon extractCouponFromResultSet(ResultSet resultSet) throws ApplicationException {
+
+		try {
+			long couponId = resultSet.getLong("coupon_id");
+			long company_id = resultSet.getLong("company_id");
+			Category category = Category.valueOf(resultSet.getString("category_id"));
+			String title = resultSet.getString("Coupon_TITLE");
+			String description = resultSet.getString("Coupon_DESCRIPTION");
+			Date startDate = resultSet.getDate("Coupon_START_DATE");
+			Date endDate = resultSet.getDate("Coupon_END_DATE");
+			int amount = resultSet.getInt("Coupon_AMOUNT");
+			double price = resultSet.getDouble("Coupon_PRICE");
+			String image = resultSet.getString("Coupon_IMAGE");
+
+			return new Coupon(couponId, company_id, category, title, description, startDate, endDate, amount, price,
+					image);
+		} catch (SQLException e) {
+			// **If there was an exception in the "try" block above, it is caught here and
+			// notifies a level above.
+			e.printStackTrace();
+			throw new ApplicationException(e, ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to Extract a coupon from Resultset");
+		}
+	}
 }
+
+

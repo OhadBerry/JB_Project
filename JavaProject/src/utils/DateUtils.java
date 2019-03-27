@@ -1,4 +1,5 @@
-package com.avi.coupons.utils;
+package utils;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

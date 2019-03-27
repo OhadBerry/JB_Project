@@ -22,29 +22,37 @@ public class CompanyDao implements ICompaniesDao {
 		// Turn on the connections
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
 
 		try {
 			connection = JdbcUtils.getConnection();
-			
+
 			// Creating the SQL query
 			String sqlStatement = "SELECT * FROM companies WHERE COMPANY_ID = ?";
-			
+
 			// Combining between the syntax and our connection
 			preparedStatement = connection.prepareStatement(sqlStatement);
-			
+
 			// Replacing the question marks in the statement above with the relevant data
 			preparedStatement.setLong(1, companyId);
+
+			// Executing the query, if result contains any data return true, otherwise
+			// return false
+			resultSet = preparedStatement.executeQuery();
 			
-			// Executing the query, if result contains any data return true, otherwise return false
-			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				return true;
 			}
 			return false;
-			
-		// Closing the resources
+		} catch (SQLException e) {
+			// **If there was an exception in the "try" block above, it is caught here and
+			// notifies a level above.
+			e.printStackTrace();
+			throw new ApplicationException(e, ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to check if a company exists");
+			// Closing the resources
 		} finally {
-			JdbcUtils.closeResources(connection, preparedStatement);
+			JdbcUtils.closeResources(connection, preparedStatement,resultSet);
 		}
 	}
 
@@ -77,9 +85,7 @@ public class CompanyDao implements ICompaniesDao {
 			// notifies a level above.
 			e.printStackTrace();
 			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
-					DateUtils.getCurrentDateAndTimeString() + "FAILED to create a company");
-			// throw new Exception("Failed to create company " + company.toString()+"Failed
-			// " ,e);
+					DateUtils.getCurrentDateAndTime() + "FAILED to create a company");
 		} finally {
 			// Closing the resources
 			JdbcUtils.closeResources(connection, preparedStatement);
@@ -115,9 +121,7 @@ public class CompanyDao implements ICompaniesDao {
 			// notifies a level above.
 			e.printStackTrace();
 			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
-					DateUtils.getCurrentDateAndTimeString() + "FAILED to create company");
-			// throw new Exception("Failed to create company " + company.toString()+"Failed
-			// " ,e);
+					DateUtils.getCurrentDateAndTime() + "FAILED to Update a company");
 		} finally {
 			// Closing the resources
 			JdbcUtils.closeResources(connection, preparedStatement);
@@ -144,7 +148,14 @@ public class CompanyDao implements ICompaniesDao {
 			
 			// Executing the update
 			preparedStatement.executeUpdate();
-			
+		
+	} catch (SQLException e) {
+		// **If there was an exception in the "try" block above, it is caught here and
+		// notifies a level above.
+		e.printStackTrace();
+		throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
+				DateUtils.getCurrentDateAndTime() + "FAILED to Delete a company");
+
 		// Closing the resources
 		} finally {
 			JdbcUtils.closeResources(connection, preparedStatement);
@@ -157,6 +168,7 @@ public class CompanyDao implements ICompaniesDao {
 		// Turn on the connections
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
 
 		try {
 			connection = JdbcUtils.getConnection();
@@ -168,31 +180,39 @@ public class CompanyDao implements ICompaniesDao {
 			preparedStatement = connection.prepareStatement(sqlStatement);			
 
 			// Executing the query
-			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet = preparedStatement.executeQuery();
 			
-			ArrayList<Company> theCompanies = new ArrayList<Company>(); 
+			ArrayList<Company> allCompanies = new ArrayList<Company>(); 
 			
 			while (resultSet.next()) {
 				
 				Long id = resultSet.getLong("Company_Id");
 				String name = resultSet.getString("Company_NAME");
-				theCompanies.add(new Company(id, name));
+				allCompanies.add(new Company(id, name));
 			}
-			return theCompanies;
+			return allCompanies;
 			
+		} catch (SQLException e) {
+			// **If there was an exception in the "try" block above, it is caught here and
+			// notifies a level above.
+			e.printStackTrace();
+			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to return all companies");
+
 			// Closing the resources
-		} finally {
-			JdbcUtils.closeResources(connection, preparedStatement);
-		}
-	}	
+			} finally {
+				JdbcUtils.closeResources(connection, preparedStatement,resultSet);
+			}	
+		}	
 			
 
 
-	public Company getOneCompanyById(long companyId) throws Exception {
+	public Company getCompanyById(long companyId) throws Exception {
 
 		// Turn on the connections
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
 
 		try {
 			connection = JdbcUtils.getConnection();
@@ -207,7 +227,7 @@ public class CompanyDao implements ICompaniesDao {
 			preparedStatement.setLong(1, companyId);
 
 			// Executing the query
-			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet = preparedStatement.executeQuery();
 			
 			if (resultSet.next()) {
 				String name = resultSet.getString("Company_NAME");
@@ -215,10 +235,18 @@ public class CompanyDao implements ICompaniesDao {
 			}
 			
 			return null;
-			
+				
+		}
+			catch (SQLException e) {
+				// **If there was an exception in the "try" block above, it is caught here and
+				// notifies a level above.
+				e.printStackTrace();
+			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to Delete a company");
+
 			// Closing the resources
 		} finally {
-			JdbcUtils.closeResources(connection, preparedStatement);
+			JdbcUtils.closeResources(connection, preparedStatement,resultSet);
 		}
 	}
 }

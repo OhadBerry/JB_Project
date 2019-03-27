@@ -64,9 +64,9 @@ public class TestCompanyDao {
 		
 	}
 	public void testGetOneCompanyById(long companyId) throws Exception{
-		System.out.println("Beginning testGetOneCompanyById");
-		System.out.println(myCompanyDao.getOneCompanyById(companyId));
-		System.out.println("getOneCompanyById Tested");
+		System.out.println("Beginning testGetCompanyById");
+		System.out.println(myCompanyDao.getCompanyById(companyId));
+		System.out.println("getCompanyById Tested");
 		
 	}
 	public void testGetAllCompanies() throws Exception{

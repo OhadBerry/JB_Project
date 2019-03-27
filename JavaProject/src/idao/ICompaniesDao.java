@@ -8,7 +8,7 @@ public interface ICompaniesDao {
 	public void createCompany (Company company) throws Exception;
 	public void updateCompany (Company company) throws Exception;
 	public void deleteCompanyById (long companyId) throws Exception;
-	public Company getOneCompanyById(long companyId) throws Exception;
+	public Company getCompanyById(long companyId) throws Exception;
 	public ArrayList<Company> getAllCompanies() throws Exception;
 
 }
