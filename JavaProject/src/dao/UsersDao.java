@@ -10,6 +10,7 @@ import exceptions.ErrorType;
 import idao.IUsersDao;
 import utils.*;
 import javabeans.*;
+import logic.ClientType;
 
 public class UsersDao implements IUsersDao{
 	
@@ -20,19 +21,26 @@ public class UsersDao implements IUsersDao{
 
 		try {
 			//Establish a connection from the connection manager
-
+			connection=JdbcUtils.getConnection();
+			
 			//Creating the SQL query
-			//CompanyID is defined as a primary key and auto incremented
-			String sqlStatement="INSERT INTO Users (user_name, user_password, user_type, company_id) VALUES(?,?,?, ?)";
+			//UserID is defined as a primary key and auto incremented
+			String sqlStatement="INSERT INTO `javaproject`.`users`\r\n" + 
+					"(`user_name`,\r\n" + 
+					"`user_password`,\r\n" + 
+					"`company_id`,\r\n" + 
+					"`user_type`)\r\n" + 
+					"VALUES\r\n" + 
+					"(?,\r\n" + 
+					"?,\r\n" + 
+					"?,\r\n" + 
+					"?);";
 
 			//Combining between the syntax and our connection
-			preparedStatement=connection.prepareStatement(sqlStatement);
+			preparedStatement = connection.prepareStatement(sqlStatement);
 
 			//Replacing the question marks in the statement above with the relevant data
-			preparedStatement.setString(1,user.getUserName());
-			preparedStatement.setString(2,user.getPassword());
-			preparedStatement.setString(3, user.getType().name());
-			preparedStatement.setLong(4, user.getCompanyId());
+			setUserIntoPreparedStatement(preparedStatement,user);
 
 			//Executing the update
 			preparedStatement.executeUpdate();
@@ -41,7 +49,7 @@ public class UsersDao implements IUsersDao{
 			e.printStackTrace();
 			//If there was an exception in the "try" block above, it is caught here and notifies a level above.
 			throw new ApplicationException(e, ErrorType.GENERAL_ERROR, DateUtils.getCurrentDateAndTime().toString()
-					+" Create company failed");
+					+" Create User failed");
 		} 
 		finally {
 			//Closing the resources
@@ -49,13 +57,134 @@ public class UsersDao implements IUsersDao{
 		}
 	}
 	
+
+
+	@Override
+	public void updateUser(User user) throws ApplicationException {
+		// Turn on the connections
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			// Establish a connection from the connection manager
+			connection = JdbcUtils.getConnection();
+
+			// Creating the SQL query
+			// CompanyID is defined as a primary key and auto incremented
+			String sqlStatement = "UPDATE `javaproject`.`users`\r\n" + 
+					"SET\r\n" +  
+					"`user_name` = ?,\r\n" + 
+					"`user_password` = ?,\r\n" + 
+					"`company_id` = ?,\r\n" + 
+					"`user_type` = ?\r\n" + 
+					"WHERE `user_id` = ?;";
+
+			// Combining between the syntax and our connection
+			preparedStatement = connection.prepareStatement(sqlStatement);
+
+			// Replacing the question marks in the statement above with the relevant data
+			setUserIntoPreparedStatement(preparedStatement,user);
+			preparedStatement.setLong(5,user.getId());
+			
+			// Executing the update
+			preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			// **If there was an exception in the "try" block above, it is caught here and
+			// notifies a level above.
+			e.printStackTrace();
+			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to update a customer");
+		} finally {
+			// Closing the resources
+			JdbcUtils.closeResources(connection, preparedStatement);
+		}
+	}
+
+	@Override
+	public void deleteUserById(long User_ID) throws ApplicationException {
+		// Turn on the connections
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			connection = JdbcUtils.getConnection();
+			
+			// Creating the SQL query
+			String sqlStatement = "DELETE FROM `javaproject`.`users`\r\n" + 
+					"WHERE User_id = ?;";
+			
+			// Combining between the syntax and our connection
+			preparedStatement = connection.prepareStatement(sqlStatement);
+			
+			// Replacing the question marks in the statement above with the relevant data
+			preparedStatement.setLong(1,User_ID);
+			
+			// Executing the update
+			preparedStatement.executeUpdate();
+			
+		} catch (SQLException e) {
+			// **If there was an exception in the "try" block above, it is caught here and
+			// notifies a level above.
+			e.printStackTrace();
+			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to delete a user");
+			
+		// Closing the resources
+		} finally {
+			JdbcUtils.closeResources(connection, preparedStatement);
+		}
+	}
+	
+	@Override
+	public User getUserByID(long User_ID) throws ApplicationException {
+		// Turn on the connections
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = JdbcUtils.getConnection();
+
+			// Creating the SQL query
+			String sqlStatement = "SELECT * FROM Users WHERE user_ID = ?";
+
+			// Combining between the syntax and our connection
+			preparedStatement = connection.prepareStatement(sqlStatement);
+
+			// Replacing the question marks in the statement above with the relevant data
+			preparedStatement.setLong(1, User_ID);
+
+			// Executing the query
+			resultSet = preparedStatement.executeQuery();
+			
+			if (resultSet.next()) {
+				return extractUserFromResultSet(resultSet);
+			}
+			
+			return null;
+				
+		}
+			catch (SQLException e) {
+				// **If there was an exception in the "try" block above, it is caught here and
+				// notifies a level above.
+				e.printStackTrace();
+			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED retrieve a customer by Id");
+
+			// Closing the resources
+		} finally {
+			JdbcUtils.closeResources(connection, preparedStatement,resultSet);
+		}
+	}
+
+	
 	
 	public boolean login(String user, String password) throws ApplicationException {
 		//Turn on the connections
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
 		ResultSet result=null;
-		Company company=new Company();
 
 		try {
 			//Establish a connection from the connection manager
@@ -81,33 +210,51 @@ public class UsersDao implements IUsersDao{
 		} catch (SQLException e) {
 			//If there was an exception in the "try" block above, it is caught here and notifies a level above.
 			throw new ApplicationException( e, ErrorType.GENERAL_ERROR, DateUtils.getCurrentDateAndTime()
-					+" Get company has failed");
+					+" Get login has failed");
 		}
 		finally {
 			//Closing the resources
 			JdbcUtils.closeResources(connection, preparedStatement, result);	
 		}
 	}
-
-
-	@Override
-	public void updateUser(User user) throws ApplicationException {
-		// TODO Auto-generated method stub
+	
+	private PreparedStatement setUserIntoPreparedStatement(PreparedStatement preparedStatement,User user) throws ApplicationException {
 		
-	}
-
-
-	@Override
-	public void deleteUserById(Long user_id) throws ApplicationException {
-		// TODO Auto-generated method stub
+		try {
 		
-	}
-
-
-	@Override
-	public void getUserDetailsByUsernameAndPassword(String username, String password) throws ApplicationException {
-		// TODO Auto-generated method stub
+		preparedStatement.setString(1,user.getUserName());
+		preparedStatement.setString(2,user.getPassword());
+		preparedStatement.setLong(3,user.getCompanyId());
+		preparedStatement.setString(4,user.getType().name());
 		
+		return preparedStatement;
+		
+		} catch (SQLException e) {
+			// **If there was an exception in the "try" block above, it is caught here and
+			// notifies a level above.
+			e.printStackTrace();
+			throw new ApplicationException(e, ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to Set a User to a PreparedStatement");
+		}
 	}
-
+	
+	private User extractUserFromResultSet (ResultSet resultSet) throws ApplicationException {
+		
+		try {
+			long id = resultSet.getLong("customer_id");
+			String userName = resultSet.getString("user_name");
+			String password = resultSet.getString("user_password");
+			Long companyId = resultSet.getLong("company_id");
+			ClientType type = ClientType.valueOf(resultSet.getString("user_type"));
+			
+		return new User(id, userName, password, companyId, type);
+		
+		} catch (SQLException e) {
+			// **If there was an exception in the "try" block above, it is caught here and
+			// notifies a level above.
+			e.printStackTrace();
+			throw new ApplicationException(e, ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to Set a extract a User from a ResultSet");
+		}
+	}
 }

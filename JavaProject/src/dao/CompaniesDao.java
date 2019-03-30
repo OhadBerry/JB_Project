@@ -10,11 +10,10 @@ import exceptions.ApplicationException;
 import exceptions.ErrorType;
 import idao.ICompaniesDao;
 import javabeans.Company;
-import javabeans.Coupon;
 import utils.DateUtils;
 import utils.JdbcUtils;
 
-public class CompanyDao implements ICompaniesDao {
+public class CompaniesDao implements ICompaniesDao {
 	
 
 	public boolean isCompanyExistsById(long companyId) throws Exception {
@@ -242,7 +241,7 @@ public class CompanyDao implements ICompaniesDao {
 				// notifies a level above.
 				e.printStackTrace();
 			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
-					DateUtils.getCurrentDateAndTime() + "FAILED to Delete a company");
+					DateUtils.getCurrentDateAndTime() + "FAILED to return a company");
 
 			// Closing the resources
 		} finally {

@@ -12,12 +12,21 @@
     <fullyQualifiedTypeName name="DBDAO.CustomersDBDAO"/>
     <fullyQualifiedTypeName name="java.lang.Thread"/>
     <fullyQualifiedTypeName name="Program.CouponExpirationDailyJob"/>
-    <fullyQualifiedTypeName name="javabeans.User"/>
-    <fullyQualifiedTypeName name="java.util.Date"/>
     <fullyQualifiedTypeName name="utils.JdbcUtils"/>
     <fullyQualifiedTypeName name="exceptions.ApplicationException"/>
     <fullyQualifiedTypeName name="java.sql.SQLException"/>
     <fullyQualifiedTypeName name="exceptions.ErrorType"/>
     <fullyQualifiedTypeName name="utils.DateUtils"/>
     <fullyQualifiedTypeName name="dao.CompanyDao"/>
+    <fullyQualifiedTypeName name="dao.CouponsDao"/>
+    <fullyQualifiedTypeName name="javabeans.Coupon"/>
+    <fullyQualifiedTypeName name="java.util.Date"/>
+    <fullyQualifiedTypeName name="javabeans.Category"/>
+    <fullyQualifiedTypeName name="java.sql.Date"/>
+    <fullyQualifiedTypeName name="idao.ICustomersDao"/>
+    <fullyQualifiedTypeName name="dao.CustomersDao"/>
+    <fullyQualifiedTypeName name="javabeans.Customer"/>
+    <fullyQualifiedTypeName name="dao.UsersDao"/>
+    <fullyQualifiedTypeName name="javabeans.User"/>
+    <fullyQualifiedTypeName name="logic.ClientType"/>
 </qualifiedTypeNameHistroy>

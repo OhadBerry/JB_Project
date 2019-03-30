@@ -7,8 +7,8 @@ public interface IUsersDao {
 	
 	public void createUser(User user) throws ApplicationException;
 	public void updateUser(User user) throws ApplicationException;
-	public void deleteUserById(Long user_id) throws ApplicationException;
-	public void getUserDetailsByUsernameAndPassword(String username, String password) throws ApplicationException;
-
+	public void deleteUserById(long User_ID) throws ApplicationException;
+	public User getUserByID (long User_ID) throws ApplicationException;
+	public boolean login(String user, String password) throws ApplicationException;
 
 }

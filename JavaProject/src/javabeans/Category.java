@@ -1,7 +1,7 @@
 package javabeans;
 
 public enum Category {
-	food ,
+	Food ,
 	Shopping,
 	Restaurant,
 	Hotel,

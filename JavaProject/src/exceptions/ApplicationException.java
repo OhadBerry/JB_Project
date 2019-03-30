@@ -7,7 +7,7 @@ public class ApplicationException extends Exception {
 	
 	public ApplicationException(Exception theException, ErrorType errorType, String exceptionMessage) {
 		super(theException);
-		System.out.println(errorType+exceptionMessage);
+		System.out.println(errorType+" "+exceptionMessage);
 	}
 
 	public ApplicationException(ErrorType generalError, String string, SQLException e) {

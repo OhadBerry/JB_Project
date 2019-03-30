@@ -1,80 +1,58 @@
 package javabeans;
-import java.util.ArrayList;
 
 public class Customer {
 
 //------------------Properties----------------------
 
-	private int id = 1;
+	private long customer_id = 1;
 	private String firstName;
 	private String lastName;
-	private String email;
-	private String password;
-	private ArrayList<Coupon> coupons;
 	
 //------------------Constructor----------------------	
 	
-	public Customer(int id, String firstName, String lastName, String email, String password,
-			ArrayList<Coupon> coupons) {
+	public Customer(long customer_id, String firstName, String lastName) {
 		super();
-		this.setId(id);
-		this.setFirstName(firstName);
-		this.setLastName(lastName);
-		this.setEmail(email);
-		this.setPassword(password);
-		this.setCoupons(coupons);
+		this.customer_id = customer_id;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 	
-	public Customer(String firstName, String lastName, String email, String password,
-			ArrayList<Coupon> coupons) {
+	public Customer(String firstName, String lastName) {
 		super();
-		this.setFirstName(firstName);
-		this.setLastName(lastName);
-		this.setEmail(email);
-		this.setPassword(password);
-		this.setCoupons(coupons);
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 	
-	public Customer() {};
-	
+	public Customer() {}
+
+
 //------------------Getters/Setters----------------------	
 	
-	public int getId() {
-		return id;
+	public long getCustomer_id() {
+		return customer_id;
 	}
-	public void setId(int id) {
-		this.id = id;
+
+	public void setCustomer_id(long customer_id) {
+		this.customer_id = customer_id;
 	}
+
 	public String getFirstName() {
 		return firstName;
 	}
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+
 	public String getLastName() {
 		return lastName;
 	}
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public ArrayList<Coupon> getCoupons() {
-		return coupons;
-	}
-	public void setCoupons(ArrayList<Coupon> coupons) {
-		this.coupons = coupons;
-	}
+
+
 
 	
 	
@@ -82,9 +60,8 @@ public class Customer {
 	
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", coupons=" + coupons + "]";
-	}
+		return "Customer [customer_id=" + customer_id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+	};
 	
 
 }

@@ -5,19 +5,17 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import exceptions.ApplicationException;
 import exceptions.ErrorType;
 import idao.ICouponsDao;
 import javabeans.Category;
-import javabeans.Company;
 import javabeans.Coupon;
 import utils.DateUtils;
 import utils.JdbcUtils;
 
-public class CouponDao implements  ICouponsDao{
+public class CouponsDao implements  ICouponsDao{
 
 	@Override
 	public void createCoupon(Coupon coupon) throws Exception {
@@ -32,8 +30,8 @@ public class CouponDao implements  ICouponsDao{
 			// Creating the SQL query
 			// CompanyID is defined as a primary key and auto incremented
 			String sqlStatement = "INSERT INTO `javaproject`.`coupons`\r\n" + 
-					"`company_id`,\r\n" + 
-					"`category_id`,\r\n" + 
+					"(`company_id`,\r\n" + 
+					"`category`,\r\n" + 
 					"`Coupon_TITLE`,\r\n" + 
 					"`Coupon_DESCRIPTION`,\r\n" + 
 					"`Coupon_START_DATE`,\r\n" + 
@@ -42,7 +40,7 @@ public class CouponDao implements  ICouponsDao{
 					"`Coupon_PRICE`,\r\n" + 
 					"`Coupon_IMAGE`)\r\n" + 
 					"VALUES\r\n" + 
-					"?,\r\n" + 
+					"(?,\r\n" + 
 					"?,\r\n" + 
 					"?,\r\n" + 
 					"?,\r\n" + 
@@ -56,15 +54,7 @@ public class CouponDao implements  ICouponsDao{
 			preparedStatement = connection.prepareStatement(sqlStatement);
 
 			// Replacing the question marks in the statement above with the relevant data
-			preparedStatement.setLong(1,coupon.getCompany_id());
-			preparedStatement.setLong(2,coupon.getCategory_id());
-			preparedStatement.setString(3, coupon.getTitle());
-			preparedStatement.setString(4, coupon.getDescription());
-			preparedStatement.setDate(5,(Date)coupon.getStartDate());
-			preparedStatement.setDate(6,(Date)coupon.getEndDate());
-			preparedStatement.setInt(7, coupon.getAmount());
-			preparedStatement.setDouble(8, coupon.getPrice());
-			preparedStatement.setString(9, coupon.getImage());
+			setCouponIntoPreparedStatement(preparedStatement,coupon);
 
 			// Executing the update
 			preparedStatement.executeUpdate();
@@ -74,7 +64,7 @@ public class CouponDao implements  ICouponsDao{
 			// notifies a level above.
 			e.printStackTrace();
 			throw new ApplicationException(e, ErrorType.GENERAL_ERROR,
-					DateUtils.getCurrentDateAndTime() + "FAILED to create a company");
+					DateUtils.getCurrentDateAndTime() + "FAILED to create a coupon");
 			// throw new Exception("Failed to create company " + company.toString()+"Failed
 			// " ,e);
 		} finally {
@@ -100,7 +90,7 @@ public class CouponDao implements  ICouponsDao{
 			String sqlStatement = "UPDATE `javaproject`.`coupons`\r\n" + 
 					"SET\r\n" + 
 					"`company_id` = ?,\r\n" + 
-					"`category_id` = ?,\r\n" + 
+					"`category` = ?,\r\n" + 
 					"`Coupon_TITLE` = ?,\r\n" + 
 					"`Coupon_DESCRIPTION` = ?,\r\n" + 
 					"`Coupon_START_DATE` = ?,\r\n" + 
@@ -114,15 +104,7 @@ public class CouponDao implements  ICouponsDao{
 			preparedStatement = connection.prepareStatement(sqlStatement);
 
 			// Replacing the question marks in the statement above with the relevant data
-			preparedStatement.setLong(1,coupon.getCompany_id());
-			preparedStatement.setLong(2,coupon.getCategory_id());
-			preparedStatement.setString(3, coupon.getTitle());
-			preparedStatement.setString(4, coupon.getDescription());
-			preparedStatement.setDate(5,(Date)coupon.getStartDate());
-			preparedStatement.setDate(6,(Date)coupon.getEndDate());
-			preparedStatement.setInt(7, coupon.getAmount());
-			preparedStatement.setDouble(8, coupon.getPrice());
-			preparedStatement.setString(9, coupon.getImage());
+			setCouponIntoPreparedStatement(preparedStatement,coupon);
 			preparedStatement.setLong(10,coupon.getId());
 			
 			// Executing the update
@@ -133,7 +115,7 @@ public class CouponDao implements  ICouponsDao{
 			// notifies a level above.
 			e.printStackTrace();
 			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
-					DateUtils.getCurrentDateAndTime() + "FAILED to create a coupon");
+					DateUtils.getCurrentDateAndTime() + "FAILED to update a coupon");
 		} finally {
 			// Closing the resources
 			JdbcUtils.closeResources(connection, preparedStatement);
@@ -211,7 +193,7 @@ public class CouponDao implements  ICouponsDao{
 				// notifies a level above.
 				e.printStackTrace();
 			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
-					DateUtils.getCurrentDateAndTime() + "FAILED to Delete a company");
+					DateUtils.getCurrentDateAndTime() + "FAILED retrieve a coupon by Id");
 
 			// Closing the resources
 		} finally {
@@ -250,7 +232,7 @@ public class CouponDao implements  ICouponsDao{
 				// notifies a level above.
 				e.printStackTrace();
 			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
-					DateUtils.getCurrentDateAndTime() + "FAILED to Delete a company");
+					DateUtils.getCurrentDateAndTime() + "FAILED to get all coupons");
 
 			// Closing the resources
 		} finally {
@@ -264,7 +246,7 @@ public class CouponDao implements  ICouponsDao{
 		try {
 			long couponId = resultSet.getLong("coupon_id");
 			long company_id = resultSet.getLong("company_id");
-			Category category = Category.valueOf(resultSet.getString("category_id"));
+			Category category = Category.valueOf(resultSet.getString("category"));
 			String title = resultSet.getString("Coupon_TITLE");
 			String description = resultSet.getString("Coupon_DESCRIPTION");
 			Date startDate = resultSet.getDate("Coupon_START_DATE");
@@ -276,6 +258,30 @@ public class CouponDao implements  ICouponsDao{
 			return new Coupon(couponId, company_id, category, title, description, startDate, endDate, amount, price,
 					image);
 		} catch (SQLException e) {
+			// **If there was an exception in the "try" block above, it is caught here and
+			// notifies a level above.
+			e.printStackTrace();
+			throw new ApplicationException(e, ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to Extract a coupon from Resultset");
+		}
+	}
+	
+	private PreparedStatement setCouponIntoPreparedStatement (PreparedStatement preparedStatement, Coupon coupon) throws Exception {
+		
+		try {
+			preparedStatement.setLong(1,coupon.getCompany_id());
+			preparedStatement.setString(2,coupon.getCategory().name());
+			preparedStatement.setString(3, coupon.getTitle());
+			preparedStatement.setString(4, coupon.getDescription());
+			preparedStatement.setDate(5,(Date)coupon.getStartDate());
+			preparedStatement.setDate(6,(Date)coupon.getEndDate());
+			preparedStatement.setInt(7, coupon.getAmount());
+			preparedStatement.setDouble(8, coupon.getPrice());
+			preparedStatement.setString(9, coupon.getImage());
+	
+			return preparedStatement;
+		}
+		catch (SQLException e) {
 			// **If there was an exception in the "try" block above, it is caught here and
 			// notifies a level above.
 			e.printStackTrace();

@@ -1,5 +1,4 @@
 package javabeans;
-import java.util.ArrayList;
 
 public class Company {
 	

@@ -1,19 +1,17 @@
 package test;
 
-import java.util.ArrayList;
-
-import dao.CompanyDao;
+import dao.CompaniesDao;
 import javabeans.Company;
 
-public class TestCompanyDao {
+public class TestCompaniesDao {
 	
 	//Params
-	CompanyDao myCompanyDao = new CompanyDao(); 
+	CompaniesDao myCompanyDao = new CompaniesDao(); 
 	private Company company;
 	private long companyId;
 	
 	//Constructor
-	public TestCompanyDao() {
+	public TestCompaniesDao() {
 		System.out.println("Initializing TestCompanyDao Params");
 		company = new Company("myTestCompany");
 		companyId = 0;

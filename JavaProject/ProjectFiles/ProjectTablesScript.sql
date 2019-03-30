@@ -27,7 +27,7 @@ company_id          bigint,
 
 user_type           int(3) ,
 
-PRIMARY KEY (user_id),
+PRIMARY KEY AUTO_INCREMENT (user_id),
 
 FOREIGN KEY (company_id) REFERENCES companies(company_id)
 
@@ -53,9 +53,9 @@ FOREIGN KEY (Customer_ID) REFERENCES Users(User_ID)
 USE javaproject;
 CREATE TABLE categories(
 
-Catagory_ID 	 bigint AUTO_INCREMENT PRIMARY KEY,
+Category_ID 	 bigint AUTO_INCREMENT PRIMARY KEY,
 
-Catagory_NAME 	varchar(25)
+Category_NAME 	varchar(25) UNIQUE
 
 );
 
@@ -67,9 +67,9 @@ Coupon_ID 	    		bigint AUTO_INCREMENT PRIMARY KEY,
 
 company_id			    bigint not null,
 
-category_id			    bigint not null,
+Category    			    varchar(25),
 
-Coupon_TITLE        		varchar(25),
+Coupon_TITLE        		varchar(25) UNIQUE,
 
 Coupon_DESCRIPTION      	varchar(50),
 
@@ -84,7 +84,7 @@ Coupon_PRICE				double Not null,
 Coupon_IMAGE            	varchar(50),
 
 
-FOREIGN KEY (category_id) 	REFERENCES 	categories(Catagory_ID),
+FOREIGN KEY (Category) 	REFERENCES 	categories(Category_NAME),
 FOREIGN KEY (company_id) 	REFERENCES 	companies(company_id)
 
 );
@@ -103,3 +103,23 @@ FOREIGN KEY (coupon_id) REFERENCES coupons(Coupon_ID),
 
 FOREIGN KEY (customer_id) REFERENCES customers(Customer_ID)
 );
+
+INSERT INTO `javaproject`.`categories`
+(`Category_ID`,
+`Category_NAME`)
+VALUES
+(1,
+'food');
+
+INSERT INTO `javaproject`.`users`
+(`user_id`,
+`user_name`,
+`user_password`,
+`company_id`,
+`user_type`)
+VALUES
+(1,
+'TestUserName',
+'TestUserPassword',
+null,
+1);
