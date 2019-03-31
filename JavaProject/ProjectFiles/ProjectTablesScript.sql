@@ -17,7 +17,7 @@ Company_NAME 	    varchar(25) NOT NULL
 USE javaproject;
 CREATE TABLE Users(
 
-user_id 		    bigint,
+user_id 		    bigint AUTO_INCREMENT PRIMARY KEY ,
 
 user_name 			varchar(25),
 
@@ -25,9 +25,7 @@ user_password       varchar(25),
 
 company_id          bigint,
 
-user_type           int(3) ,
-
-PRIMARY KEY AUTO_INCREMENT (user_id),
+user_type           varchar(25) NOT NULL ,
 
 FOREIGN KEY (company_id) REFERENCES companies(company_id)
 
@@ -122,4 +120,4 @@ VALUES
 'TestUserName',
 'TestUserPassword',
 null,
-1);
+'Customer');

@@ -210,7 +210,7 @@ public class UsersDao implements IUsersDao{
 		} catch (SQLException e) {
 			//If there was an exception in the "try" block above, it is caught here and notifies a level above.
 			throw new ApplicationException( e, ErrorType.GENERAL_ERROR, DateUtils.getCurrentDateAndTime()
-					+" Get login has failed");
+					+" Login has failed");
 		}
 		finally {
 			//Closing the resources
@@ -241,7 +241,7 @@ public class UsersDao implements IUsersDao{
 	private User extractUserFromResultSet (ResultSet resultSet) throws ApplicationException {
 		
 		try {
-			long id = resultSet.getLong("customer_id");
+			long id = resultSet.getLong("user_id");
 			String userName = resultSet.getString("user_name");
 			String password = resultSet.getString("user_password");
 			Long companyId = resultSet.getLong("company_id");
@@ -254,7 +254,7 @@ public class UsersDao implements IUsersDao{
 			// notifies a level above.
 			e.printStackTrace();
 			throw new ApplicationException(e, ErrorType.GENERAL_ERROR,
-					DateUtils.getCurrentDateAndTime() + "FAILED to Set a extract a User from a ResultSet");
+					DateUtils.getCurrentDateAndTime() + "FAILED to extract a User from a ResultSet");
 		}
 	}
 }

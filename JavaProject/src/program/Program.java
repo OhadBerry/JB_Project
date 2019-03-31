@@ -77,7 +77,7 @@ public class Program {
 			long updatedId = 2;
 			String updatedUserName = "myUpdatedUserName";
 			String updatedPassword = "myUpdatedPassword";
-			long updatedCompanyID = 2;
+			long updatedCompanyID = 1;
 			ClientType updatedType = ClientType.Customer;
 			
 			User updatedUser = new User(updatedId, updatedUserName, updatedPassword, updatedCompanyID, updatedType);
@@ -86,13 +86,7 @@ public class Program {
 			myUsersDao.createUser(user);
 			myUsersDao.updateUser(updatedUser);
 			System.out.println("Getting user number "+user_ID+" :"+myUsersDao.getUserByID(user_ID));			
-			myUsersDao.deleteUserById(user_ID);
-			System.out.println("Getting all customers :"+myCustomersDao.getAllCustomers());
-			
-
-			
-			
-			
+//			myUsersDao.deleteUserById(user_ID);
 			
 			
 		} catch (Exception ex) {
