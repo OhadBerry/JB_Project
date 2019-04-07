@@ -2,8 +2,8 @@ package idao;
 
 public interface IPurchasesDao {
 	
-	public void createCouponPurchase (int customerID, int couponID) throws Exception;
-	public void deleteCouponPurchase (int customerID, int couponID) throws Exception;
-	public boolean isCouponPurchaseExists(int customerID, int couponID) throws Exception;
+	public void createCouponPurchase (long customer_ID, long coupon_ID) throws Exception;
+	public void deleteCouponPurchase (long customer_ID, long coupon_ID) throws Exception;
+	public boolean isCouponPurchaseExists(long customer_ID, long coupon_ID) throws Exception;
 
 }
