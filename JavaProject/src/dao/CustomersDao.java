@@ -84,7 +84,7 @@ public class CustomersDao implements  ICustomersDao{
 
 			// Replacing the question marks in the statement above with the relevant data
 			setCustomerIntoPreparedStatement(preparedStatement,customer);
-			preparedStatement.setLong(4,customer.getCustomer_id());
+			preparedStatement.setLong(4,customer.getId());
 			
 			// Executing the update
 			preparedStatement.executeUpdate();
@@ -142,9 +142,14 @@ public class CustomersDao implements  ICustomersDao{
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
+		UsersDao usersDao = new UsersDao();
+		Customer customer = new Customer();
 
 		try {
 			connection = JdbcUtils.getConnection();
+			
+			//Getting user Details from the Users Table
+			customer.setUser(usersDao.getUserByID(customerID));
 
 			// Creating the SQL query
 			String sqlStatement = "SELECT * FROM customers WHERE customer_id = ?";
@@ -159,7 +164,8 @@ public class CustomersDao implements  ICustomersDao{
 			resultSet = preparedStatement.executeQuery();
 			
 			if (resultSet.next()) {
-				return extractCustomerFromResultSet(resultSet);
+				extractCustomerFromResultSet(resultSet,customer);
+				return customer;
 			}
 			
 			return null;
@@ -184,6 +190,9 @@ public class CustomersDao implements  ICustomersDao{
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
+		Customer customer = new Customer();
+		UsersDao usersDao = new UsersDao();
+
 
 		try {
 			connection = JdbcUtils.getConnection();
@@ -200,7 +209,9 @@ public class CustomersDao implements  ICustomersDao{
 			ArrayList<Customer> allCustomers = new ArrayList<Customer>();
 			
 			while (resultSet.next()) {
-				allCustomers.add(extractCustomerFromResultSet(resultSet));	
+				extractCustomerFromResultSet(resultSet,customer);
+				customer.setUser(usersDao.getUserByID(customer.getId()));
+				allCustomers.add(customer);	
 			}
 			return allCustomers;
 		}
@@ -220,7 +231,7 @@ public class CustomersDao implements  ICustomersDao{
 	private PreparedStatement setCustomerIntoPreparedStatement (PreparedStatement preparedStatement,Customer customer) throws Exception {
 		
 		try {
-		preparedStatement.setLong(1,customer.getCustomer_id());
+		preparedStatement.setLong(1,customer.getId());
 		preparedStatement.setString(2,customer.getFirstName());
 		preparedStatement.setString(3,customer.getLastName());
 		return preparedStatement;
@@ -234,14 +245,18 @@ public class CustomersDao implements  ICustomersDao{
 		}
 	}
 	
-	private Customer extractCustomerFromResultSet (ResultSet resultSet) throws Exception {
+	private void extractCustomerFromResultSet (ResultSet resultSet, Customer customer) throws Exception {
 		
 		try {
 			long customer_id = resultSet.getLong("customer_id");
 			String firstName = resultSet.getString("Customer_FIRSTNAME");
 			String lastName = resultSet.getString("Customer_LASTNAME");
 			
-		return new Customer(customer_id, firstName, lastName);
+			customer.setId(customer_id);
+			customer.setFirstName(firstName);
+			customer.setLastName(lastName);
+			
+		return;
 		
 		} catch (SQLException e) {
 			// **If there was an exception in the "try" block above, it is caught here and

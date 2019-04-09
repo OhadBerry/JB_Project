@@ -77,15 +77,15 @@ public class Program {
 			long customer_id = 3;
 			String firstName = "myCustomerFirstName";
 			String lastName = "myCustomerLasttName";
-			Customer customer = new Customer(customer_id, firstName, lastName);
+//			Customer customer = new Customer(customer_id, firstName, lastName);
 					
 			long updatedCustomer_id = 2;
 			String updatedFirstName = "myUpdatedCustomerFirstName";
 			String updatedLastName = "myUpdatedCustomerLasttName";
-			Customer updatedCustomer = new Customer(updatedCustomer_id, updatedFirstName, updatedLastName);
+//			Customer updatedCustomer = new Customer(updatedCustomer_id, updatedFirstName, updatedLastName);
 			
 //			myCustomersDao.createCustomer(customer);
-			myCustomersDao.updateCustomer(updatedCustomer);
+//			myCustomersDao.updateCustomer(updatedCustomer);
 			System.out.println("Getting customer number "+customer_id+" :"+myCustomersDao.getCustomerById(customer_id));
 //			myCustomersDao.deleteCustomer(customer_id);
 			System.out.println("Getting all customers :"+myCustomersDao.getAllCustomers());

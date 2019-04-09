@@ -48,13 +48,52 @@ public class CompaniesDao implements ICompaniesDao {
 			// notifies a level above.
 			e.printStackTrace();
 			throw new ApplicationException(e, ErrorType.GENERAL_ERROR,
-					DateUtils.getCurrentDateAndTime() + "FAILED to check if a company exists");
+					DateUtils.getCurrentDateAndTime() + "FAILED to check if a company exists by Id");
 			// Closing the resources
 		} finally {
 			JdbcUtils.closeResources(connection, preparedStatement,resultSet);
 		}
 	}
+	
+	public boolean isCompanyExistsByName(String company_name) throws Exception {
 
+		// Turn on the connections
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = JdbcUtils.getConnection();
+
+			// Creating the SQL query
+			String sqlStatement = "SELECT * FROM companies WHERE company_name = ?";
+
+			// Combining between the syntax and our connection
+			preparedStatement = connection.prepareStatement(sqlStatement);
+
+			// Replacing the question marks in the statement above with the relevant data
+			preparedStatement.setString(1, company_name);
+
+			// Executing the query, if result contains any data return true, otherwise
+			// return false
+			resultSet = preparedStatement.executeQuery();
+			
+			if (resultSet.next()) {
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			// **If there was an exception in the "try" block above, it is caught here and
+			// notifies a level above.
+			e.printStackTrace();
+			throw new ApplicationException(e, ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to check if a company exists by name");
+			// Closing the resources
+		} finally {
+			JdbcUtils.closeResources(connection, preparedStatement,resultSet);
+		}
+	}
+	
 
 	public void createCompany(Company company) throws ApplicationException {
 		

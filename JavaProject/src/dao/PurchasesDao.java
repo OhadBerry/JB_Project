@@ -93,6 +93,39 @@ public class PurchasesDao implements IPurchasesDao{
 		}
 	}
 
+	public void deletePurchasesByCompanyID(long companyID) throws ApplicationException {
+		// Turn on the connections
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			connection = JdbcUtils.getConnection();
+			
+			// Creating the SQL query
+			String sqlStatement = "DELETE FROM purchases WHERE coupon_id IN (SELECT id FROM coupons WHERE company_id=?);";
+			
+			// Combining between the syntax and our connection
+			preparedStatement = connection.prepareStatement(sqlStatement);
+			
+			// Replacing the question marks in the statement above with the relevant data
+			preparedStatement.setLong(1,companyID);
+
+			// Executing the update
+			preparedStatement.executeUpdate();
+			
+		} catch (SQLException e) {
+			// **If there was an exception in the "try" block above, it is caught here and
+			// notifies a level above.
+			e.printStackTrace();
+			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to delete purchases by companyID");
+			
+		// Closing the resources
+		} finally {
+			JdbcUtils.closeResources(connection, preparedStatement);
+		}
+	}
+	
 	@Override
 	public boolean isCouponPurchaseExists(long customer_ID, long coupon_ID) throws Exception {
 		// Turn on the connections
@@ -150,5 +183,8 @@ public class PurchasesDao implements IPurchasesDao{
 					DateUtils.getCurrentDateAndTime() + "FAILED to Set a Purchase to a PreparedStatement");
 		}
 	}
+	
+
+
 
 }

@@ -134,8 +134,7 @@ public class CouponsDao implements  ICouponsDao{
 			
 			// Creating the SQL query
 			String sqlStatement = "DELETE FROM `javaproject`.`coupons`\r\n" + 
-					"WHERE Coupon_id = ? ;\r\n" + 
-					"";
+					"WHERE Coupon_id = ? ;";
 			
 			// Combining between the syntax and our connection
 			preparedStatement = connection.prepareStatement(sqlStatement);
@@ -159,6 +158,40 @@ public class CouponsDao implements  ICouponsDao{
 		}
 	}
 
+	public void deleteCouponByCompanyID(long companyID) throws ApplicationException {
+		// Turn on the connections
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			connection = JdbcUtils.getConnection();
+			
+			// Creating the SQL query
+			String sqlStatement = "DELETE FROM `javaproject`.`coupons`\r\n" + 
+					"WHERE company_id = ? ;" ;
+			
+			// Combining between the syntax and our connection
+			preparedStatement = connection.prepareStatement(sqlStatement);
+			
+			// Replacing the question marks in the statement above with the relevant data
+			preparedStatement.setLong(1, companyID);
+			
+			// Executing the update
+			preparedStatement.executeUpdate();
+			
+		} catch (SQLException e) {
+			// **If there was an exception in the "try" block above, it is caught here and
+			// notifies a level above.
+			e.printStackTrace();
+			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
+				DateUtils.getCurrentDateAndTime() + "FAILED to delete coupons by companyID");
+			
+		// Closing the resources
+		} finally {
+			JdbcUtils.closeResources(connection, preparedStatement);
+		}
+	}
+	
 	@Override
 	public Coupon getCouponbyId(long couponId) throws Exception {
 		// Turn on the connections
@@ -289,6 +322,8 @@ public class CouponsDao implements  ICouponsDao{
 					DateUtils.getCurrentDateAndTime() + "FAILED to Extract a coupon from Resultset");
 		}
 	}
+
+
 }
 
 

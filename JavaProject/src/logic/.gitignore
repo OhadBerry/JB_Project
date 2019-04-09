@@ -4,3 +4,9 @@
 /CustomerFacade.class
 /ClientType.class
 /LoginManager.class
+/CompaniesController.class
+/CustomersController.class
+/UsersController.class
+/CouponsController.class
+/purchasesController.class
+/PurchasesController.class

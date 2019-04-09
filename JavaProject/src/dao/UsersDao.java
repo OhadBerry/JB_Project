@@ -14,7 +14,7 @@ import logic.ClientType;
 
 public class UsersDao implements IUsersDao{
 	
-	public void createUser(User user) throws ApplicationException {
+	public long createUser(User user) throws ApplicationException {
 		//Turn on the connections
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
@@ -22,40 +22,50 @@ public class UsersDao implements IUsersDao{
 		try {
 			//Establish a connection from the connection manager
 			connection=JdbcUtils.getConnection();
-			
+
 			//Creating the SQL query
-			//UserID is defined as a primary key and auto incremented
-			String sqlStatement="INSERT INTO `javaproject`.`users`\r\n" + 
-					"(`user_name`,\r\n" + 
-					"`user_password`,\r\n" + 
-					"`company_id`,\r\n" + 
-					"`user_type`)\r\n" + 
-					"VALUES\r\n" + 
-					"(?,\r\n" + 
-					"?,\r\n" + 
-					"?,\r\n" + 
-					"?);";
+			//CompanyID is defined as a primary key and auto incremented
+			
+			String sqlStatement = null;
+
+			// 2 types of users, we insert the companyId parameter for a "company" type user
+			if (user.getCompanyId() == null){
+				sqlStatement="INSERT INTO Users (user, password, type) VALUES(?,?,?)";
+			}
+			else {
+				sqlStatement="INSERT INTO Users (user, password, type, ) VALUES(?,?,?, ?)";
+			}
 
 			//Combining between the syntax and our connection
-			preparedStatement = connection.prepareStatement(sqlStatement);
+			preparedStatement=connection.prepareStatement(sqlStatement, PreparedStatement.RETURN_GENERATED_KEYS);
 
 			//Replacing the question marks in the statement above with the relevant data
-			setUserIntoPreparedStatement(preparedStatement,user);
+			preparedStatement.setString(1,user.getUserName());
+			preparedStatement.setString(2,user.getPassword());
+			preparedStatement.setString(3, user.getType().name());
 
 			//Executing the update
 			preparedStatement.executeUpdate();
-
+			
+			ResultSet resultSet = preparedStatement.getGeneratedKeys();
+			if (resultSet.next()) {
+				long id = resultSet.getLong(1);
+				return id;
+			}
+			throw new ApplicationException(ErrorType.GENERAL_ERROR, "Failed to create a user");
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			//If there was an exception in the "try" block above, it is caught here and notifies a level above.
-			throw new ApplicationException(e, ErrorType.GENERAL_ERROR, DateUtils.getCurrentDateAndTime().toString()
-					+" Create User failed");
+			throw new ApplicationException(e, ErrorType.GENERAL_ERROR, DateUtils.getCurrentDateAndTime()
+					+" Create user failed");
 		} 
 		finally {
 			//Closing the resources
 			JdbcUtils.closeResources(connection, preparedStatement);
 		}
 	}
+	
 	
 
 
@@ -257,4 +267,45 @@ public class UsersDao implements IUsersDao{
 					DateUtils.getCurrentDateAndTime() + "FAILED to extract a User from a ResultSet");
 		}
 	}
+
+
+
+	public boolean isUserExistsByName(String userName) throws ApplicationException {
+		// Turn on the connections
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = JdbcUtils.getConnection();
+
+			// Creating the SQL query
+			String sqlStatement = "SELECT * FROM Users WHERE user_name = ?";
+
+			// Combining between the syntax and our connection
+			preparedStatement = connection.prepareStatement(sqlStatement);
+
+			// Replacing the question marks in the statement above with the relevant data
+			preparedStatement.setString(1, userName);
+
+			// Executing the query, if result contains any data return true, otherwise
+			// return false
+			resultSet = preparedStatement.executeQuery();
+			
+			if (resultSet.next()) {
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			// **If there was an exception in the "try" block above, it is caught here and
+			// notifies a level above.
+			e.printStackTrace();
+			throw new ApplicationException(e, ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to check if a user exists by name");
+			// Closing the resources
+		} finally {
+			JdbcUtils.closeResources(connection, preparedStatement,resultSet);
+		}
+	}
+
 }

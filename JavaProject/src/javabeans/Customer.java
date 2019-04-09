@@ -1,24 +1,20 @@
 package javabeans;
 
+import logic.ClientType;
+
 public class Customer {
 
 //------------------Properties----------------------
 
-	private long customer_id = 1;
+	private User user;
 	private String firstName;
 	private String lastName;
 	
 //------------------Constructor----------------------	
 	
-	public Customer(long customer_id, String firstName, String lastName) {
+	public Customer(String firstName, String lastName, User user) {
 		super();
-		this.customer_id = customer_id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
-	
-	public Customer(String firstName, String lastName) {
-		super();
+		this.user = user;
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
@@ -28,12 +24,12 @@ public class Customer {
 
 //------------------Getters/Setters----------------------	
 	
-	public long getCustomer_id() {
-		return customer_id;
+	public long getId() {
+		return user.getId();
 	}
 
-	public void setCustomer_id(long customer_id) {
-		this.customer_id = customer_id;
+	public void setId(long id) {
+		user.setId(id);
 	}
 
 	public String getFirstName() {
@@ -52,7 +48,13 @@ public class Customer {
 		this.lastName = lastName;
 	}
 
+	public User getUser() {
+		return user;
+	}
 
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	
 	
@@ -60,8 +62,8 @@ public class Customer {
 	
 	@Override
 	public String toString() {
-		return "Customer [customer_id=" + customer_id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
-	};
-	
+		return "Customer [user=" + user + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+	}
+
 
 }
