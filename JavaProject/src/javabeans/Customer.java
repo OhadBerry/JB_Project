@@ -19,6 +19,13 @@ public class Customer {
 		this.lastName = lastName;
 	}
 	
+	public Customer(long id, String firstName, String lastName) {
+		super();
+		this.user = user;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+	
 	public Customer() {}
 
 
