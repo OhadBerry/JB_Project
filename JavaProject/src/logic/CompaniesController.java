@@ -2,6 +2,7 @@ package logic;
 
 import dao.CompaniesDao;
 import exceptions.ApplicationException;
+import exceptions.ErrorType;
 import javabeans.Company;
 
 public class CompaniesController {
@@ -17,15 +18,19 @@ public class CompaniesController {
 	}
 	
 	public void createCompany(Company company) throws Exception {
-		if (isValidCompany(company)) {
-			companiesDao.createCompany(company);
-		}	
+		if (isCompanyNameExists(company)) {
+			throw new ApplicationException(ErrorType.NAME_ALREADY_EXISTS, "Failed to create Company, Company Name Already Exists");
+		}
+		
+		companiesDao.createCompany(company);
 	}
 	
 	public void updateCompany(Company company) throws Exception {
 		if (isValidCompany(company)) {
 			companiesDao.updateCompany(company);
+			return;
 		}	
+		throw new ApplicationException(ErrorType.NAME_ALREADY_EXISTS, "Failed to update Company, Company Name Already Exists"); 
 	}
 	
 	public void deleteCompany(long companyID) throws ApplicationException {
@@ -37,8 +42,8 @@ public class CompaniesController {
 		return companiesDao.getCompanyById(companyID);
 	}
 
-	private boolean isValidCompany(Company company) throws Exception {
-		if (!companiesDao.isCompanyExistsByName(company.getName())) {
+	private boolean isCompanyNameExists(Company company) throws Exception {
+		if (companiesDao.isCompanyExistsByName(company.getName())) {
 			return true;
 		}
 		return false;

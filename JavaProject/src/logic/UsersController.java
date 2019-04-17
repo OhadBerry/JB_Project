@@ -15,7 +15,7 @@ public class UsersController {
 
 	public long createUser(User user) throws ApplicationException{
 		if (usersDao.isUserExistsByName(user.getUserName())) {
-			throw new ApplicationException(ErrorType.NAME_IS_ALREADY_EXISTS, "User name already exist");
+			throw new ApplicationException(ErrorType.NAME_ALREADY_EXISTS, "User name already exists");
 		}
 		return usersDao.createUser(user);
 	}

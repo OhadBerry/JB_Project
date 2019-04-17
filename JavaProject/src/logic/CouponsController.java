@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import dao.CouponsDao;
 import exceptions.ApplicationException;
-import javabeans.Company;
 import javabeans.Coupon;
 
 public class CouponsController {

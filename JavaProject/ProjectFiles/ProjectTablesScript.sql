@@ -91,11 +91,15 @@ FOREIGN KEY (company_id) 	REFERENCES 	companies(company_id)
 USE javaproject;
 CREATE TABLE purchases(
 
+purchase_id 		bigint AUTO_INCREMENT,
+
 customer_id 		bigint ,
 
 coupon_id 			bigint ,
 
-PRIMARY KEY (customer_id,coupon_id),
+coupon_id 			int ,
+
+PRIMARY KEY (purchase_id),
 
 FOREIGN KEY (coupon_id) REFERENCES coupons(Coupon_ID),
 

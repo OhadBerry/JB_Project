@@ -49,7 +49,7 @@ public class UsersDao implements IUsersDao{
 			
 			ResultSet resultSet = preparedStatement.getGeneratedKeys();
 			if (resultSet.next()) {
-				long id = resultSet.getLong(1);
+				long id = resultSet.getLong("user_id");
 				return id;
 			}
 			throw new ApplicationException(ErrorType.GENERAL_ERROR, "Failed to create a user");

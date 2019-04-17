@@ -1,11 +1,11 @@
-package test;
+package testDao;
 
 import dao.CompaniesDao;
 import javabeans.Company;
 
 public class TestCompaniesDao {
 	
-	//Params
+	//Parameters
 	CompaniesDao myCompanyDao = new CompaniesDao(); 
 	private Company company;
 	private long companyId;
@@ -72,5 +72,17 @@ public class TestCompaniesDao {
 		System.out.println(myCompanyDao.getAllCompanies());
 		System.out.println("getAllCompanies Tested");		
 	}
+	
+	public static void AllTests() throws Exception {
+		System.out.println("Testing CompaniesDao");
+		TestCompaniesDao companiesTestBench = new TestCompaniesDao();
+		companiesTestBench.testCreateCompany(companiesTestBench.getCompany());
+		companiesTestBench.testUpdateCompany(new Company("UpdatedCompany"));
+		companiesTestBench.testIsCompanyExistsById(31);
+		companiesTestBench.testGetOneCompanyById(31);
+		companiesTestBench.testDeleteCompanyById(30);
+		companiesTestBench.testGetAllCompanies();
+	}
+
 
 }

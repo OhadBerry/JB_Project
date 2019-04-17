@@ -2,6 +2,7 @@ package exceptions;
 
 public enum ErrorType {
 	GENERAL_ERROR, 
-	NAME_IS_ALREADY_EXISTS,
+	NAME_ALREADY_EXISTS,
+	INVALID_COMPANY,
 
 }
