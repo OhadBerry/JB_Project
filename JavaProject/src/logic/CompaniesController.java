@@ -16,19 +16,19 @@ public class CompaniesController {
 		this.purchasesController = new PurchasesController();
 	}
 	
-	public void CreateCompany(Company company) throws Exception {
+	public void createCompany(Company company) throws Exception {
 		if (isValidCompany(company)) {
 			companiesDao.createCompany(company);
 		}	
 	}
 	
-	public void UpdateCompany(Company company) throws Exception {
+	public void updateCompany(Company company) throws Exception {
 		if (isValidCompany(company)) {
 			companiesDao.updateCompany(company);
 		}	
 	}
 	
-	public void DeleteCompany(long companyID) throws ApplicationException {
+	public void deleteCompany(long companyID) throws ApplicationException {
 		couponsController.deleteCouponsByCompanyID(companyID);
 		purchasesController.deletePurchasesByCompanyID(companyID);
 	}

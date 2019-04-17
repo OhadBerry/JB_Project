@@ -14,12 +14,10 @@ import utils.JdbcUtils;
 
 public class PurchasesDao implements IPurchasesDao{
 
-	@Override
-	public void createCouponPurchase(long customer_ID, long coupon_ID) throws Exception {
+	public void createCouponPurchase(Purchase purchase) throws Exception {
 		// Turn on the connections
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		Purchase purchase = new Purchase(customer_ID,coupon_ID);
 		
 		try {
 			// Establish a connection from the connection manager
@@ -183,8 +181,38 @@ public class PurchasesDao implements IPurchasesDao{
 					DateUtils.getCurrentDateAndTime() + "FAILED to Set a Purchase to a PreparedStatement");
 		}
 	}
-	
 
+	public void deleteCouponPurchaseByCouponID(long couponID) throws ApplicationException {
+		// Turn on the connections
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
 
+		try {
+			connection = JdbcUtils.getConnection();
+			
+			// Creating the SQL query
+			String sqlStatement = "DELETE FROM `javaproject`.`purchases`\r\n" + 
+					"WHERE coupon_ID = ?;";
+			
+			// Combining between the syntax and our connection
+			preparedStatement = connection.prepareStatement(sqlStatement);
+			
+			// Replacing the question marks in the statement above with the relevant data
+			preparedStatement.setLong(1,couponID);
 
+			// Executing the update
+			preparedStatement.executeUpdate();
+			
+		} catch (SQLException e) {
+			// **If there was an exception in the "try" block above, it is caught here and
+			// notifies a level above.
+			e.printStackTrace();
+			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to delete a purchase by couponID");
+			
+		// Closing the resources
+		} finally {
+			JdbcUtils.closeResources(connection, preparedStatement);
+		}
+	}
 }

@@ -19,5 +19,17 @@ public class CustomersController {
 		customersDao.createCustomer(customer);
 		
 	}
+	
+	public Customer getCustomerByID (long customerID) throws Exception {
+		return customersDao.getCustomerById(customerID);
+	}
+	
+	public void updateCustomer (Customer updatedCustomer) throws Exception {
+		customersDao.updateCustomer(updatedCustomer);
+	}
+	
+	public void deleteCustomerByID (long customerID) throws Exception {
+		customersDao.deleteCustomer(customerID);
+	}
 
 }

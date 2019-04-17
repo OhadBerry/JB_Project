@@ -96,7 +96,7 @@ public class Program {
 			System.out.println("Customer id is: "+customer_id+" Coupon Id is: "+couponId);
 			Purchase purchase = new Purchase(customer_id,couponId);
 			
-			myPurchasesDao.createCouponPurchase(purchase.getCustomer_id(),purchase.getCoupon_id());
+			myPurchasesDao.createCouponPurchase(purchase);
 			System.out.println(myPurchasesDao.isCouponPurchaseExists(purchase.getCustomer_id(),purchase.getCoupon_id()));
 			myPurchasesDao.deleteCouponPurchase(purchase.getCustomer_id(),purchase.getCoupon_id());
 			
