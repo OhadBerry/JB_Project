@@ -26,11 +26,11 @@ public class CompaniesController {
 	}
 	
 	public void updateCompany(Company company) throws Exception {
-		if (isValidCompany(company)) {
-			companiesDao.updateCompany(company);
-			return;
+		if (isCompanyNameExists(company)) {
+			throw new ApplicationException(ErrorType.NAME_ALREADY_EXISTS, "Failed to update Company, Company Name Already Exists");
 		}	
-		throw new ApplicationException(ErrorType.NAME_ALREADY_EXISTS, "Failed to update Company, Company Name Already Exists"); 
+		companiesDao.updateCompany(company);
+		 
 	}
 	
 	public void deleteCompany(long companyID) throws ApplicationException {
