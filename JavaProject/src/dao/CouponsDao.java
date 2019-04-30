@@ -334,13 +334,15 @@ public class CouponsDao implements  ICouponsDao{
 			connection = JdbcUtils.getConnection();
 
 			// Creating the SQL query
-			String sqlStatement = "SELECT * FROM coupons WHERE title = ?";
+			String sqlStatement = "SELECT * FROM coupons WHERE coupon_title = ? && company_id = ?";
 
 			// Combining between the syntax and our connection
 			preparedStatement = connection.prepareStatement(sqlStatement);
 
 			// Replacing the question marks in the statement above with the relevant data
 			preparedStatement.setString(1, title);
+			preparedStatement.setLong(2, companyID);
+
 
 			// Executing the query, if result contains any data return true, otherwise
 			// return false
@@ -356,7 +358,7 @@ public class CouponsDao implements  ICouponsDao{
 			// notifies a level above.
 			e.printStackTrace();
 			throw new ApplicationException(e, ErrorType.GENERAL_ERROR,
-					DateUtils.getCurrentDateAndTime() + "FAILED to check if a coupon exists title and companyID");
+					DateUtils.getCurrentDateAndTime() + "FAILED to check if a coupon exists by title and companyID");
 			// Closing the resources
 		} finally {
 			JdbcUtils.closeResources(connection, preparedStatement,resultSet);

@@ -67,7 +67,7 @@ company_id			    bigint not null,
 
 Category    			    varchar(25),
 
-Coupon_TITLE        		varchar(25) UNIQUE,
+Coupon_TITLE        		varchar(25) ,
 
 Coupon_DESCRIPTION      	varchar(50),
 

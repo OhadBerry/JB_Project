@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import dao.CouponsDao;
 import exceptions.ApplicationException;
+import exceptions.ErrorType;
 import javabeans.Coupon;
 
 public class CouponsController {
@@ -16,9 +17,10 @@ public class CouponsController {
 	}
 
 	public void createCoupon(Coupon coupon) throws Exception {
-		if (isValidCoupon(coupon)) {
-			couponsDao.createCoupon(coupon);
+		if (couponsDao.isCouponExistsByTitleAndCompanyID(coupon.getTitle(),coupon.getCompany_id())) {
+			throw new ApplicationException(ErrorType.NAME_ALREADY_EXISTS, "Failed to create Coupon, Title or companyID Already Exists");
 		}	
+		couponsDao.createCoupon(coupon);
 	}
 	
 	public void updateCoupon(Coupon updatedCoupon) throws Exception {
@@ -57,13 +59,6 @@ public class CouponsController {
 	
 	public ArrayList<Coupon> getAllCoupons() throws Exception {
 		return couponsDao.getAllCoupons();
-	}
-	
-	private boolean isValidCoupon(Coupon coupon) throws ApplicationException {
-		if (!couponsDao.isCouponExistsByTitleAndCompanyID(coupon.getTitle(),coupon.getCompany_id())) {
-			return true;
-		}
-		return false;			 
 	}
 
 }
