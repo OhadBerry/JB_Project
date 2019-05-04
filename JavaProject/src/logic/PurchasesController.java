@@ -33,4 +33,8 @@ public class PurchasesController {
 		
 	}
 
+	public void deletePurchasesByCustomerID(long customerID) throws ApplicationException {
+		purchasesDao.deletePurchasesByCustomerID(customerID);		
+	}
+
 }

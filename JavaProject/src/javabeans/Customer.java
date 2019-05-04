@@ -19,9 +19,23 @@ public class Customer {
 		this.lastName = lastName;
 	}
 	
+	public Customer(String firstName, String lastName) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+	
 	public Customer(long id, String firstName, String lastName) {
 		super();
+		setId(id);
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+	
+	public Customer(long id, String firstName, String lastName, User user) {
+		super();
 		this.user = user;
+		setId(id);
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}

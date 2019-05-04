@@ -47,16 +47,6 @@ FOREIGN KEY (Customer_ID) REFERENCES Users(User_ID)
 
 );
 
-/*CREATE TABLE categories*/
-USE javaproject;
-CREATE TABLE categories(
-
-Category_ID 	 bigint AUTO_INCREMENT PRIMARY KEY,
-
-Category_NAME 	varchar(25) UNIQUE
-
-);
-
 /* CREATE TABLE coupons*/
 USE javaproject;
 CREATE TABLE coupons(
@@ -67,7 +57,7 @@ company_id			    bigint not null,
 
 Category    			    varchar(25),
 
-Coupon_TITLE        		varchar(25) ,
+Coupon_TITLE        		varchar(25) UNIQUE,
 
 Coupon_DESCRIPTION      	varchar(50),
 
@@ -82,7 +72,6 @@ Coupon_PRICE				double Not null,
 Coupon_IMAGE            	varchar(50),
 
 
-FOREIGN KEY (Category) 	REFERENCES 	categories(Category_NAME),
 FOREIGN KEY (company_id) 	REFERENCES 	companies(company_id)
 
 );
@@ -97,7 +86,7 @@ customer_id 		bigint ,
 
 coupon_id 			bigint ,
 
-coupon_id 			int ,
+amount 			int ,
 
 PRIMARY KEY (purchase_id),
 
@@ -105,13 +94,6 @@ FOREIGN KEY (coupon_id) REFERENCES coupons(Coupon_ID),
 
 FOREIGN KEY (customer_id) REFERENCES customers(Customer_ID)
 );
-
-INSERT INTO `javaproject`.`categories`
-(`Category_ID`,
-`Category_NAME`)
-VALUES
-(1,
-'food');
 
 INSERT INTO `javaproject`.`users`
 (`user_id`,

@@ -4,6 +4,7 @@ import dao.CompaniesDao;
 import exceptions.ApplicationException;
 import exceptions.ErrorType;
 import javabeans.Company;
+import utils.ValidationUtils;
 
 public class CompaniesController {
 	
@@ -18,19 +19,15 @@ public class CompaniesController {
 	}
 	
 	public void createCompany(Company company) throws Exception {
-		if (isCompanyNameExists(company)) {
-			throw new ApplicationException(ErrorType.NAME_ALREADY_EXISTS, "Failed to create Company, Company Name Already Exists");
+		if (isValidCompany(company)) {
+			companiesDao.createCompany(company);
 		}
-		
-		companiesDao.createCompany(company);
 	}
 	
 	public void updateCompany(Company company) throws Exception {
-		if (isCompanyNameExists(company)) {
-			throw new ApplicationException(ErrorType.NAME_ALREADY_EXISTS, "Failed to update Company, Company Name Already Exists");
+		if (isValidCompany(company)) {
+			companiesDao.updateCompany(company);
 		}	
-		companiesDao.updateCompany(company);
-		 
 	}
 	
 	public void deleteCompany(long companyID) throws ApplicationException {
@@ -42,11 +39,15 @@ public class CompaniesController {
 		return companiesDao.getCompanyById(companyID);
 	}
 
-	private boolean isCompanyNameExists(Company company) throws Exception {
-		if (companiesDao.isCompanyExistsByName(company.getName())) {
-			return true;
+	private boolean isValidCompany(Company company) throws Exception {
+
+		//Validating Integrity of Company Name
+		if (ValidationUtils.isValidString(company.getName())) {
+			if (companiesDao.isCompanyExistsByName(company.getName())) {
+				throw new ApplicationException(ErrorType.NAME_ALREADY_EXISTS, "Failed to create Company, Company Name Already Exists");
+			}
 		}
-		return false;
+		return true;
 	}
 
 }

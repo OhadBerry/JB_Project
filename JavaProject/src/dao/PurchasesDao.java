@@ -259,6 +259,40 @@ public class PurchasesDao implements IPurchasesDao{
 			JdbcUtils.closeResources(connection, preparedStatement);
 		}
 	}
+	
+	public void deletePurchasesByCustomerID(long customerId) throws ApplicationException {
+		// Turn on the connections
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			connection = JdbcUtils.getConnection();
+			
+			// Creating the SQL query
+			String sqlStatement = "DELETE FROM `javaproject`.`purchases`\r\n" + 
+					"WHERE customer_id = ?;";
+			
+			// Combining between the syntax and our connection
+			preparedStatement = connection.prepareStatement(sqlStatement);
+			
+			// Replacing the question marks in the statement above with the relevant data
+			preparedStatement.setLong(1,customerId);
+
+			// Executing the update
+			preparedStatement.executeUpdate();
+			
+		} catch (SQLException e) {
+			// **If there was an exception in the "try" block above, it is caught here and
+			// notifies a level above.
+			e.printStackTrace();
+			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to delete a purchase by customerId");
+			
+		// Closing the resources
+		} finally {
+			JdbcUtils.closeResources(connection, preparedStatement);
+		}
+	}
 
 
 

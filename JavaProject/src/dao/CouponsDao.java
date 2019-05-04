@@ -334,15 +334,13 @@ public class CouponsDao implements  ICouponsDao{
 			connection = JdbcUtils.getConnection();
 
 			// Creating the SQL query
-			String sqlStatement = "SELECT * FROM coupons WHERE coupon_title = ? && company_id = ?";
+			String sqlStatement = "SELECT * FROM coupons WHERE coupon_title = ?";
 
 			// Combining between the syntax and our connection
 			preparedStatement = connection.prepareStatement(sqlStatement);
 
 			// Replacing the question marks in the statement above with the relevant data
 			preparedStatement.setString(1, title);
-			preparedStatement.setLong(2, companyID);
-
 
 			// Executing the query, if result contains any data return true, otherwise
 			// return false

@@ -74,7 +74,7 @@ public class CustomersDao implements  ICustomersDao{
 			// CompanyID is defined as a primary key and auto incremented
 			String sqlStatement = "UPDATE `javaproject`.`customers`\r\n" + 
 					"SET\r\n" +
-					"`Customer_ID` = ?, " +
+					"" +
 					"`Customer_FIRSTNAME` = ?,\r\n" + 
 					"`Customer_LASTNAME` = ?\r\n" + 
 					"WHERE `Customer_ID` = ?;";
@@ -83,8 +83,9 @@ public class CustomersDao implements  ICustomersDao{
 			preparedStatement = connection.prepareStatement(sqlStatement);
 
 			// Replacing the question marks in the statement above with the relevant data
-			setCustomerIntoPreparedStatement(preparedStatement,customer);
-			preparedStatement.setLong(4,customer.getId());
+			preparedStatement.setString(1,customer.getFirstName());
+			preparedStatement.setString(2,customer.getLastName());			
+			preparedStatement.setLong(3,customer.getId());
 			
 			// Executing the update
 			preparedStatement.executeUpdate();
@@ -178,6 +179,44 @@ public class CustomersDao implements  ICustomersDao{
 			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
 					DateUtils.getCurrentDateAndTime() + "FAILED retrieve a customer by Id");
 
+			// Closing the resources
+		} finally {
+			JdbcUtils.closeResources(connection, preparedStatement,resultSet);
+		}
+	}
+	
+	public boolean isCustomerExistsById(long customerId) throws Exception {
+		// Turn on the connections
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+	
+		try {
+			connection = JdbcUtils.getConnection();
+	
+			// Creating the SQL query
+			String sqlStatement = "SELECT * FROM customers WHERE customer_id = ?";
+	
+			// Combining between the syntax and our connection
+			preparedStatement = connection.prepareStatement(sqlStatement);
+	
+			// Replacing the question marks in the statement above with the relevant data
+			preparedStatement.setLong(1, customerId);
+	
+			// Executing the query, if result contains any data return true, otherwise
+			// return false
+			resultSet = preparedStatement.executeQuery();
+			
+			if (resultSet.next()) {
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			// **If there was an exception in the "try" block above, it is caught here and
+			// notifies a level above.
+			e.printStackTrace();
+			throw new ApplicationException(e, ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED to check if a customer exists by Id");
 			// Closing the resources
 		} finally {
 			JdbcUtils.closeResources(connection, preparedStatement,resultSet);

@@ -14,7 +14,7 @@ public class JdbcUtils {
 
 	public static Connection getConnection() throws SQLException {
 		String userName = "root";
-		String passWord = "";
+		String passWord = "Sparhawk";
 
 		Connection connection = DriverManager.getConnection(
 				"jdbc:mysql://localhost:3306/javaproject?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC",
