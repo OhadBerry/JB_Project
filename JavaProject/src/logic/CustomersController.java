@@ -1,9 +1,9 @@
 package logic;
 
+import beans.Customer;
 import dao.CustomersDao;
+import enums.ErrorType;
 import exceptions.ApplicationException;
-import exceptions.ErrorType;
-import javabeans.Customer;
 
 public class CustomersController {
 	
@@ -17,7 +17,7 @@ public class CustomersController {
 		this.purchasesController = new PurchasesController();
 	}
 	
-	public void createCustomer(Customer customer) throws Exception  {
+	public long createCustomer(Customer customer) throws Exception  {
 		//Creating a new User	
 		long id = this.usersController.createUser(customer.getUser());
 		
@@ -25,7 +25,7 @@ public class CustomersController {
 		customer.setId(id);
 				
 		//Creating new customer with newly updated id in beans
-		customersDao.createCustomer(customer);
+		return customersDao.createCustomer(customer);
 		
 	}
 	

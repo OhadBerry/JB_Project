@@ -1,4 +1,4 @@
-package javabeans;
+package beans;
 
 public class Purchase {
 	
@@ -17,6 +17,13 @@ public class Purchase {
 	public Purchase(long purchase_ID, long customer_ID, long coupon_ID, int amount) {
 		super();
 		this.purchase_ID = purchase_ID;
+		this.customer_ID = customer_ID;
+		this.coupon_ID = coupon_ID;
+		this.amount = amount;
+	}
+	
+	public Purchase(long customer_ID, long coupon_ID, int amount) {
+		super();
 		this.customer_ID = customer_ID;
 		this.coupon_ID = coupon_ID;
 		this.amount = amount;

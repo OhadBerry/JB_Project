@@ -1,4 +1,4 @@
-package javabeans;
+package beans;
 
 public class Company {
 	

@@ -1,7 +1,7 @@
-package testDao;
+package tests;
 
+import beans.Company;
 import dao.CompaniesDao;
-import javabeans.Company;
 
 public class TestCompaniesDao {
 	

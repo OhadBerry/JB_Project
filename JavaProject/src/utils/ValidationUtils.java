@@ -1,7 +1,7 @@
 package utils;
 
+import enums.ErrorType;
 import exceptions.ApplicationException;
-import exceptions.ErrorType;
 
 public class ValidationUtils {
 	

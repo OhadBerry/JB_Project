@@ -1,9 +1,9 @@
 package logic;
 
+import beans.Company;
 import dao.CompaniesDao;
+import enums.ErrorType;
 import exceptions.ApplicationException;
-import exceptions.ErrorType;
-import javabeans.Company;
 import utils.ValidationUtils;
 
 public class CompaniesController {

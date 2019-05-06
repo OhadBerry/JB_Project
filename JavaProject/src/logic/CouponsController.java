@@ -3,10 +3,10 @@ package logic;
 import java.util.ArrayList;
 import java.util.Date;
 
+import beans.Coupon;
 import dao.CouponsDao;
+import enums.ErrorType;
 import exceptions.ApplicationException;
-import exceptions.ErrorType;
-import javabeans.Coupon;
 import utils.ValidationUtils;
 
 public class CouponsController {

@@ -1,8 +1,8 @@
-package testDao;
+package tests;
 
+import beans.User;
 import dao.UsersDao;
-import javabeans.User;
-import logic.ClientType;
+import enums.ClientType;
 
 public class TestUsersDao {
 	

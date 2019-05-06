@@ -32,8 +32,14 @@
     <fullyQualifiedTypeName name="javabeans.Company"/>
     <fullyQualifiedTypeName name="dao.CompaniesDao"/>
     <fullyQualifiedTypeName name="logic.CouponsController"/>
-    <fullyQualifiedTypeName name="dao.CouponsDao"/>
     <fullyQualifiedTypeName name="dao.PurchasesDao"/>
     <fullyQualifiedTypeName name="logic.PurchasesController"/>
     <fullyQualifiedTypeName name="javabeans.Purchase"/>
+    <fullyQualifiedTypeName name="logic.UsersController"/>
+    <fullyQualifiedTypeName name="test.ControllerTests"/>
+    <fullyQualifiedTypeName name="java.util.TimerTask"/>
+    <fullyQualifiedTypeName name="java.util.Timer"/>
+    <fullyQualifiedTypeName name="dailyjob.MyTimerTask"/>
+    <fullyQualifiedTypeName name="dao.CouponsDao"/>
+    <fullyQualifiedTypeName name="tests.TestCouponsDao"/>
 </qualifiedTypeNameHistroy>

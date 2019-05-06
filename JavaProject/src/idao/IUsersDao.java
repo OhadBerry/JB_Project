@@ -1,7 +1,7 @@
 package idao;
 
+import beans.User;
 import exceptions.ApplicationException;
-import javabeans.User;
 
 public interface IUsersDao {
 	

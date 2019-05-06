@@ -1,7 +1,7 @@
 package idao;
 import java.util.ArrayList;
 
-import javabeans.Coupon;
+import beans.Coupon;
 
 public interface ICouponsDao {
 	
@@ -10,5 +10,6 @@ public interface ICouponsDao {
 	public void deleteCouponById (long couponId) throws Exception;
 	public Coupon getCouponbyId(long couponId) throws Exception;
 	public ArrayList<Coupon> getAllCoupons() throws Exception;
+	void deleteExpiredCoupons() throws Exception;
 
 }

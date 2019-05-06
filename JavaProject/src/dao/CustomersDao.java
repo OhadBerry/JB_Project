@@ -6,17 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import beans.Customer;
+import enums.ErrorType;
 import exceptions.ApplicationException;
-import exceptions.ErrorType;
 import idao.ICustomersDao;
-import javabeans.Customer;
 import utils.DateUtils;
 import utils.JdbcUtils;
 
 public class CustomersDao implements  ICustomersDao{
 
 	@Override
-	public void createCustomer(Customer customer) throws Exception {
+	public long createCustomer(Customer customer) throws Exception {
 		// Turn on the connections
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -44,6 +44,8 @@ public class CustomersDao implements  ICustomersDao{
 
 			// Executing the update
 			preparedStatement.executeUpdate();
+			
+			return customer.getId();
 
 		} catch (SQLException e) {
 			// **If there was an exception in the "try" block above, it is caught here and
@@ -51,8 +53,7 @@ public class CustomersDao implements  ICustomersDao{
 			e.printStackTrace();
 			throw new ApplicationException(e, ErrorType.GENERAL_ERROR,
 					DateUtils.getCurrentDateAndTime() + "FAILED to create a customer");
-			// throw new Exception("Failed to create company " + company.toString()+"Failed
-			// " ,e);
+
 		} finally {
 			// Closing the resources
 			JdbcUtils.closeResources(connection, preparedStatement);

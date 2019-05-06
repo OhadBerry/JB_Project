@@ -1,8 +1,8 @@
 package logic;
 
+import beans.Purchase;
 import dao.PurchasesDao;
 import exceptions.ApplicationException;
-import javabeans.Purchase;
 
 public class PurchasesController {
 	
@@ -12,8 +12,8 @@ public class PurchasesController {
 		this.purchasesDao = new PurchasesDao();
 	}
 	
-	public void createPurchase(Purchase purchase) throws Exception {
-		purchasesDao.createCouponPurchase(purchase);
+	public long createPurchase(Purchase purchase) throws Exception {
+		return purchasesDao.createCouponPurchase(purchase);
 	}
 	
 	public Purchase getPurchaseByPurchaseID(long purchaseID) throws ApplicationException {

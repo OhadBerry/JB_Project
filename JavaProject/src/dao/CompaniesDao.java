@@ -6,10 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import beans.Company;
+import enums.ErrorType;
 import exceptions.ApplicationException;
-import exceptions.ErrorType;
 import idao.ICompaniesDao;
-import javabeans.Company;
 import utils.DateUtils;
 import utils.JdbcUtils;
 

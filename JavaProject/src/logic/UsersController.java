@@ -1,9 +1,10 @@
 package logic;
 
+import beans.User;
 import dao.UsersDao;
+import enums.ClientType;
+import enums.ErrorType;
 import exceptions.ApplicationException;
-import exceptions.ErrorType;
-import javabeans.User;
 
 public class UsersController {
 
@@ -31,6 +32,10 @@ public class UsersController {
 	public void deleteUserbyID(long userId) throws ApplicationException{
 		usersDao.deleteUserById(userId);
 		return;
+	}
+	
+	public User getUserbyID(long userId) throws ApplicationException{
+		return usersDao.getUserbyID(userId);
 	}
 	
 	public ClientType login(User user) throws ApplicationException {

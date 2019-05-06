@@ -1,7 +1,7 @@
 package idao;
 import java.util.ArrayList;
 
-import javabeans.Company;
+import beans.Company;
 
 public interface ICompaniesDao {
 	public boolean isCompanyExistsById(long companyId) throws Exception;

@@ -1,9 +1,9 @@
-package testDao;
+package tests;
 
 import java.sql.Date;
 
+import beans.Customer;
 import dao.CustomersDao;
-import javabeans.Customer;
 
 public class TestCustomersDao {
 	public static void AllTests() throws Exception {

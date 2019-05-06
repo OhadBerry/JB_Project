@@ -1,4 +1,4 @@
-package exceptions;
+package enums;
 
 public enum ErrorType {
 	GENERAL_ERROR, 

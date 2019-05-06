@@ -1,4 +1,4 @@
-package testDao;
+package tests;
 
 import dao.PurchasesDao;
 

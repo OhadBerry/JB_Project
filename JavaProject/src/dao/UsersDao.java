@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import beans.*;
+import enums.ClientType;
+import enums.ErrorType;
 import exceptions.ApplicationException;
-import exceptions.ErrorType;
 import idao.IUsersDao;
 import utils.*;
-import javabeans.*;
-import logic.ClientType;
 
 public class UsersDao implements IUsersDao{
 	
@@ -368,6 +368,50 @@ public class UsersDao implements IUsersDao{
 			e.printStackTrace();
 			throw new ApplicationException(e, ErrorType.GENERAL_ERROR,
 					DateUtils.getCurrentDateAndTime() + "FAILED to extract a User from a ResultSet");
+		}
+	}
+
+
+
+
+	public User getUserbyID(long userId) throws ApplicationException {
+		// Turn on the connections
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JdbcUtils.getConnection();
+		
+			// Creating the SQL query
+			String sqlStatement = "SELECT * FROM Users WHERE user_id = ?";
+		
+			// Combining between the syntax and our connection
+			preparedStatement = connection.prepareStatement(sqlStatement);
+		
+			// Replacing the question marks in the statement above with the relevant data
+			preparedStatement.setLong(1, userId);
+		
+			// Executing the query
+			resultSet = preparedStatement.executeQuery();
+			
+			if (resultSet.next()) {
+				return extractUserFromResultSet(resultSet);
+			}
+			
+			return null;
+				
+		}
+			catch (SQLException e) {
+				// **If there was an exception in the "try" block above, it is caught here and
+				// notifies a level above.
+				e.printStackTrace();
+			throw new ApplicationException(e,ErrorType.GENERAL_ERROR,
+					DateUtils.getCurrentDateAndTime() + "FAILED retrieve a User by ID");
+		
+			// Closing the resources
+		} finally {
+			JdbcUtils.closeResources(connection, preparedStatement,resultSet);
 		}
 	}
 }
